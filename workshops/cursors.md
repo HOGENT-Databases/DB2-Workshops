@@ -3,7 +3,7 @@ In this workshop you'll learn how to create and use a Cursor.
 
 ## Prerequisites
 - A running copy of database **xtreme**;
-- Finalised the exercises about stored procedures.
+- Finalized the exercises about stored procedures.
 
 ## Introduction
 In the previous workshop, you wrote a stored procedure to delete all orders for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders. However the stored procedure didn't work due to a **foreign key constraint**.
