@@ -1,4 +1,4 @@
-# Workshop - Cursors
+# Workshop - Triggers
 In this workshop you'll learn how to create and use a Trigger.
 
 ## Prerequisites
