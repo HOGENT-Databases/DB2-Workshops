@@ -2,17 +2,18 @@ ALTER PROCEDURE [dbo].[DeleteOrdersFromSupplier]
   @supplierid int,
   @nrdeletedorders int output
 AS
-  DELETE FROM orders WHERE orderid IN 
+  DELETE FROM orders WHERE OrderID IN 
   (
-   SELECT DISTINCT orderid
-   FROM product p 
-   JOIN ordersdetail od ON p.ProductID = od.productid
-   WHERE supplierid = @supplierid
+    SELECT DISTINCT OrderID 
+    FROM OrdersDetail
+    JOIN Product ON Product.ProductID = OrdersDetail.ProductID
+    WHERE Product.SupplierID = @supplierid
   )
   SET @nrdeletedorders = @@ROWCOUNT
   
   
-  -- The subquery can also start from the OrderDetails and join the Product
-SELECT DISTINCT OrderID FROM OrdersDetail
-JOIN Product ON Product.ProductID = OrdersDetail.ProductID
-WHERE Product.SupplierID = @supplierid
+-- The subquery can also start from the Product table  and join the OrderDetail
+   SELECT DISTINCT OrderID
+   FROM Product
+   JOIN OrdersDetail ON Product.ProductID = ordersdetail.ProductID
+   WHERE SupplierID = @supplierid
