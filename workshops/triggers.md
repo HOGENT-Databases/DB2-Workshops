@@ -6,26 +6,39 @@ In this workshop you'll learn how to create and use a Trigger.
 
 ## Exercise 1 
 In our organisation `Employees` report to other `employees` a.k.a Managers. To make sure certain managers are not supervising too many employees, we'd like to find out which manager supervises **the least** amount of `employees`. Each time a new `employee` starts in our organisation we'll let the new `employee` `ReportTo` the manager with the least of employees reporting to him, a perfect use case for a `trigger`.
-
 # Call to action
-- Create a trigger that, when adding a new employee, sets the reportsTo attribute to the employee to whom the least employees already report. 
+- Create a trigger that, when adding a new employee, sets the reportsTo attribute to the employee to whom the least employees already report. Use the **naming conventions** mentioned in Deep Dive.
 
 ### Execution
 Make sure the following code can be executed and gives the correct output:
 ```sql
-insert into Employee(EmployeeID,LastName,FirstName)
-values (100,'New','Emplo');
+BEGIN TRANSACTION
+INSERT INTO Employee(EmployeeID,LastName,FirstName)
+       VALUES (100,'New','Emplo');
 
-select * from Employee;
+SELECT 
+    EmployeeID,
+    LastName,
+    FirstName,
+    ReportsTo
+FROM Employee
+WHERE EmployeeID = 100; -- The ReportsTo should be filled in correctly.
+ROLLBACK
 ```
 
 ### Tips
 1. Find out how to check which employee has the least `reportsTo` count.
+    - Don't use the `SuperviserId`
 2. Wrap the previous `SELECT` statement in a trigger.
+3. Update the **first** inserted record.
 
 ### Deep Dive
 1. Is it also needed to `EXECUTE` the trigger on a `DELETE` or `UPDATE` statement?
 2. What happends if mulitple `Employees` are inserted at the same time?
+3. Naming conventions for triggers:
+    1. Each trigger name should use the syntax  `TR_[TableName]_[ActionName]`.
+    2. Each table name and action name should start with a capital letter.
+4. Read more about triggers in [this article](https://docs.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql?view=sql-server-2017), if you want to know more about `naming conventions` [this article](https://www.c-sharpcorner.com/UploadFile/f0b2ed/what-is-naming-convention/) can provide some insight.
 
 ### Solution
 A possible solution of exercise 1 can be found [here](/solutions/triggers-1.sql)
@@ -56,17 +69,19 @@ To keep track of all the modifications done to the `product` table, we want to c
 Make sure the following code can be executed:
 
 ```sql
-INSERT INTO Product(productID, productName)
+BEGIN TRANSACTION
+INSERT INTO Product(ProductID, ProductName)
 VALUES(12, 'New product12')
 
 UPDATE Product
 SET productName = 'abc'
-WHERE productID = 12
+WHERE ProductID = 12
 
-DELETE FROM product
-WHERE productID = 12
+DELETE FROM Product
+WHERE ProductID = 12
 
-SELECT * FROM productAudit -- Changes should be seen here.
+SELECT * FROM ProductAudit -- Changes should be seen here.
+ROLLBACK
 ```
 
 ### Deep Dive
@@ -79,26 +94,56 @@ A possible solution of exercise 2 can be found [here](/solutions/triggers-2.sql)
 ---
 
 ## Exercise 3
-For this exercise we'll introduce a new (redundant) attribute/column for the `ProductType` table called `AmountOfProducts` (int). The column will keep track of all the `products` that have this specific `ProductType`. Doing so the amount a `producttype` is linked to `products` does not have to be recalculated each time on a `SELECT` query but should be updated each time a `product` is `mutated`(Deleted, Inserted or Updated). For this overhead we'll use a `trigger` on the `product` table.
+For this exercise we'll introduce a new (redundant) attribute/column for the `ProductType` table called `AmountOfProducts` (int). The column will keep track of all the `products` that have this specific `ProductType`. Doing so the amount a `ProductType` is linked to `products` does not have to be recalculated each time on a `SELECT` query but should be updated each time a `product` is `mutated`(Deleted, Inserted or Updated). For this overhead we'll use a `trigger` on the `product` table.
 
 > Redundent data is not always a bad idea, it can speed up the performance drastically when done correctly, since you often read data a lot more than you write it. However this can create some additional complexity or overhead in your database, so be cautious when introducing redundant columns. 
 
 ### Call to action
-- Add a new column to the table `producttype`:
-    - AmountOfProducts - int
-- Update all the rows of the `producttype` table to reflect the actual `AmountOfProducts`.
+- Add a new column to the table `ProductType`:
+    - `AmountOfProducts` - int
+- Update all the rows of the `ProductType` table to reflect the actual `AmountOfProducts`.
     - Write an update query for this.
-- Create a trigger for all actions (Update, Delete, Insert) to reflect the possible mutation of the `product` table, so the `AmountOfProducts` attribute of all the `producttype` rows are correct.
+- Create a trigger for all actions (Update, Delete, Insert) to reflect the possible mutation of the `product` table, so the `AmountOfProducts` attribute of all the `ProductType` rows are correct.
 
 ### Execution
 Make sure the following code can be executed:
 
 ```sql
-INSERT INTO Product(ProductID, ProductName, ProductTypeID) 
-VALUES(61, 'New product 61',1)
--- ProductType's AmountOfProducts  should be updated
-DELETE FROM product WHERE productId = 60
--- ProductType's AmountOfProducts  should be updated
+BEGIN TRANSACTION
+SET NOCOUNT ON
+DECLARE @typeName NVARCHAR(MAX);
+DECLARE @amount INT;
+
+-- Get initial value
+SELECT 
+    @typeName = ProductTypeName,
+    @amount = AmountOfProducts
+FROM ProductType
+WHERE ProductTypeID = 1  -- ProductType's AmountOfProducts  should be updated
+
+PRINT FORMATMESSAGE('Initial amount of productType: %s is %d', @typeName, @amount)
+
+-- Adding a new product
+PRINT 'Insert of a new product happend.';
+INSERT  INTO Product(ProductID, ProductName, ProductTypeID) 
+        VALUES(999, 'New product 61',1)
+
+SELECT @amount = AmountOfProducts
+FROM ProductType
+WHERE ProductTypeID = 1  -- ProductType's AmountOfProducts  should be updated
+PRINT FORMATMESSAGE('After insert the amount of productType: %s is %d', @typeName, @amount)
+
+-- Removing a product
+DELETE FROM product 
+WHERE productId = 999
+PRINT 'Delete of a product happend.';
+
+SELECT @amount = AmountOfProducts
+FROM ProductType
+WHERE ProductTypeID = 1  -- ProductType's AmountOfProducts  should be updated
+PRINT FORMATMESSAGE('After delete the amount of productType: %s is %d', @typeName, @amount)
+
+ROLLBACK
 ```
 
 ### Solution

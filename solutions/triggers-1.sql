@@ -1,19 +1,21 @@
-create trigger setReportsTo
-on employee
-after insert
-as begin
-  set nocount on
-  -- in case of a multiline insert 
-  -- (e.g. when using an INSERT/SELECT statement)
-  -- only the first employee's ReportsTo field is updated
-  declare @reportsTo int
-  select top 1 @reportsTo = reportsTo
-  from employee
-  where reportsTo is not null
-  group by reportsTo
-  order by count(reportsTo)
+CREATE TRIGGER TR_Employee_SetReportsTo
+ON employee -- The table we're invoking the trigger on.
+AFTER INSERT -- Only when we insert the trigger should be invoked.
+as
+  DECLARE @reportsTo INT;
+
+  SELECT TOP 1 @reportsTo = ReportsTo -- Set variable
+  FROM employee
+  WHERE ReportsTo is not null
+  GROUP BY ReportsTo
+  ORDER BY Count(ReportsTo)
  
-  update employee
-  set reportsTo = @reportsTo
-  where employeeID = (select top 1 EmployeeID from inserted)
-end
+  UPDATE employee
+  SET reportsTo = @reportsTo
+  WHERE EmployeeID = (select top 1 EmployeeID from inserted)
+
+/*
+REMARK:
+  In case of a multiline insert   (e.g. when using an INSERT/SELECT statement).
+  Only the first employee's ReportsTo field will be updated.
+*/
