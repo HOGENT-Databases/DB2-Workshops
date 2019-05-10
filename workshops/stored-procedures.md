@@ -61,12 +61,14 @@ We'd like to clean-up the `product` table since a lot of `products` are no longe
     - There are no `purchases` for the `product`
     - There are no `orders` for the `product`
     - Check these conditions before deleting the product, so you don’t rely on SQL Server messages. Generate an appropriate error message if the product can’t be deleted. 
-- Create a stored procedure called `DeleteProduct2`(similar to `DeleteProduct1`) for deleting a product. 
+    - Use `RAISERROR` or `THROW` (see Deep Dive further in this document)
+        - It's better to fail immediatly and show the error when something goes wrong as soon as possible and stop the execution of the stored procedure. (also known as Defensive Programming).
+- Create a stored procedure called `DeleteProduct2` (similar to `DeleteProduct1`) for deleting a product. 
 You can only delete a product if:
     - The `product` exists
     - There are no `purchases` for the `product`
     - There are no `orders` for the `product`
-    - In this version version you try to delete the product and catch the exeptions that might occur.
+    - In this version version you try to delete the product and catch the exeptions that might occur **inside** the stored procedure and `PRINT` a message to the console.
 - Test your procedures. Give the `SELECT` statements to find appropriate test data. 
 
 ### Execution
@@ -75,11 +77,11 @@ Make sure the following code can be executed:
 ```sql
 -- Version 1
 BEGIN TRANSACTION
-EXECUTE deleteproduct1 403000;
+EXECUTE deleteproduct1 403000; --Another ID might be needed.
 ROLLBACK
 -- Version 2
 BEGIN TRANSACTION
-EXECUTE deleteproduct2 403000;
+EXECUTE deleteproduct2 403000; --Another ID might be needed.
 ROLLBACK
 ```
 
@@ -92,6 +94,23 @@ ROLLBACK
         - There are no `orders` for the `product`
 - Version 2
 - First try to `DELETE` and then check the `ERROR_NUMBER()`.
+
+### Deep Dive Exception Handling
+#### The THROW statement
+Raises an exception and transfers execution to a CATCH block of a TRY...CATCH construct, or stops the execution of a stored procedure.
+> Remark: Only available in SQL Server 2012 and higher.
+
+##### Arugments
+- `error_number` is a constant or variable that represents the exception. error_number is int and must be greater than or equal to 50000 and less than or equal to 2147483647.
+- `message` is an string or variable that describes the exception. message is nvarchar(2048).
+- `state` is a constant or variable between 0 and 255 that indicates the state to associate with the message. state is a tinyint. [This post](https://dba.stackexchange.com/questions/35893/what-is-error-state-in-sql-server-and-how-it-can-be-used) explains why you should/could use `state`. 
+
+> More information about the `THROW` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql?view=sql-server-2017). Another possible statement to handle exceptions is `RAISERROR` but is considered obsolete by Microsoft, you can find more information [here](> More information about the `RAISERROR` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/raiserror-transact-sql?view=sql-server-2017).
+
+##### Example
+```sql
+THROW 50000, 'The record does not exist.', 1;  
+```
 
 ### Solution
 A possible solution of exercise 2 can be found [here](/solutions/stored-procedures-2.sql)

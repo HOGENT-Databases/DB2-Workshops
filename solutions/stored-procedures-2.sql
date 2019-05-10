@@ -1,45 +1,37 @@
--- Version 1
-alter procedure DeleteProduct1 @productid int
-as
-begin
-if not exists (select 1 from Product where ProductID = @productid)
-begin
-raiserror('The product doesn''t exist',14,0)
-return
-end
+ALTER PROCEDURE DeleteProduct1 @productid INT
+AS
+-- Check if the product exists.
+IF NOT EXISTS (SELECT 1 FROM Product WHERE ProductID = @productid)
+    THROW 50000, 'The product doesn''t exist',1;  
 
-if exists (select 1 from Purchases where ProductID = @productid)
-begin
-raiserror('Product not deleted: there are already purchases for the product. ',14,0)
-return
-end
+-- Check if the product is already purchased.
+IF EXISTS (SELECT 1 FROM Purchases WHERE ProductID = @productid)
+    THROW 50000, 'Product not deleted: there are already purchases for the product.',2;  
 
-if exists (select 1 from OrdersDetail where ProductID = @productid)
-begin
-raiserror('Product not deleted: there are already orders for the product. ',14,0)
-return
-end
+-- Check if the product is already ordered
+IF EXISTS (SELECT 1 FROM OrdersDetail WHERE ProductID = @productid)
+    THROW 50000, 'Product not deleted: there are already orders for the product.',3;  
 
-delete from Product where ProductID = @productid
-print 'Product ' + str(@productid) + ' deleted'
-end
+-- Actually delete the Product if we get here. 
+DELETE FROM Product WHERE ProductID = @productid;
+PRINT 'Product ' + str(@productid) + ' was successfully deleted.'
 
 -- Version 2
-alter procedure DeleteProduct2 @productid int
-as
-begin
-begin try
-delete from Product where ProductID = @productid
-if @@ROWCOUNT = 0
-throw 50000,'The product doesn''t exist',14
-print 'Product ' + str(@productid) + ' deleted'
-end try
-begin catch
-if ERROR_NUMBER() = 50000
-print error_message()
-else if ERROR_NUMBER() = 547 and ERROR_MESSAGE() like '%purchases%'
-print 'Product not deleted: there are already purchases for the product. '
-else if ERROR_NUMBER() = 547 and ERROR_MESSAGE() like '%ordersdetail%'
-print 'Product not deleted: there are already orders for the product.'
-end catch
-end
+ALTER PROCEDURE DeleteProduct2 @productid int
+AS
+BEGIN TRY
+    DELETE FROM Product WHERE ProductID = @productid
+    IF @@ROWCOUNT = 0 -- No rows were mutated, so there is something wrong.
+        THROW 50000,'The product doesn''t exist',1;
+
+    PRINT 'Product ' + str(@productid) + ' was successfully deleted.'
+END TRY
+
+BEGIN CATCH
+    IF ERROR_NUMBER() = 50000 -- In other words a custom error message. (See Deep Dive)
+        PRINT error_message()
+    ELSE IF ERROR_NUMBER() = 547 and ERROR_MESSAGE() like '%purchases%'
+            PRINT 'Product not deleted: there are already purchases for the product. '
+    ELSE IF ERROR_NUMBER() = 547 and ERROR_MESSAGE() like '%ordersdetail%'
+            PRINT 'Product not deleted: there are already orders for the product.'
+END CATCH
