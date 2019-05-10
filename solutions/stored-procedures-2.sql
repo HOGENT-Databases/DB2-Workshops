@@ -2,15 +2,15 @@ ALTER PROCEDURE DeleteProduct1
     @productid INT
 AS
 -- Check if the product exists.
-IF NOT EXISTS (SELECT 1 FROM Product WHERE ProductID = @productid)
+IF NOT EXISTS (SELECT NULL FROM Product WHERE ProductID = @productid)
     THROW 50001, 'The product doesn''t exist',1;  
 
 -- Check if the product is already purchased.
-IF EXISTS (SELECT 1 FROM Purchases WHERE ProductID = @productid)
+IF EXISTS (SELECT NULL FROM Purchases WHERE ProductID = @productid)
     THROW 50002, 'Product not deleted: there are already purchases for the product.',2;  
 
 -- Check if the product is already ordered
-IF EXISTS (SELECT 1 FROM OrdersDetail WHERE ProductID = @productid)
+IF EXISTS (SELECT NULL FROM OrdersDetail WHERE ProductID = @productid)
     THROW 50003, 'Product not deleted: there are already orders for the product.',3;  
 
 -- Actually delete the Product if we get here. 
