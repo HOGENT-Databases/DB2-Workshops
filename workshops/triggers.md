@@ -5,7 +5,30 @@ In this workshop you'll learn how to create and use a Trigger.
 - A running copy of database **xtreme**;
 
 ## Exercise 1 
-> Currently not supported, but will be supported shortly. For now see the Oefeningenbundel via Chamillo. Normally this exercise should already be completed.
+In our organisation `Employees` report to other `employees` a.k.a Managers. To make sure certain managers are not supervising too many employees, we'd like to find out which manager supervises **the least** amount of `employees`. Each time a new `employee` starts in our organisation we'll let the new `employee` `ReportTo` the manager with the least of employees reporting to him, a perfect use case for a `trigger`.
+
+# Call to action
+- Create a trigger that, when adding a new employee, sets the reportsTo attribute to the employee to whom the least employees already report. 
+
+### Execution
+Make sure the following code can be executed and gives the correct output:
+```sql
+insert into Employee(EmployeeID,LastName,FirstName)
+values (100,'New','Emplo');
+
+select * from Employee;
+```
+
+### Tips
+1. Find out how to check which employee has the least `reportsTo` count.
+2. Wrap the previous `SELECT` statement in a trigger.
+
+### Deep Dive
+1. Is it also needed to `EXECUTE` the trigger on a `DELETE` or `UPDATE` statement?
+2. What happends if mulitple `Employees` are inserted at the same time?
+
+### Solution
+A possible solution of exercise 1 can be found [here](/solutions/triggers-1.sql)
 
 ---
 
