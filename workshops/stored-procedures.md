@@ -105,7 +105,7 @@ Raises an exception and transfers execution to a CATCH block of a TRY...CATCH co
 - `message` is an string or variable that describes the exception. message is nvarchar(2048).
 - `state` is a constant or variable between 0 and 255 that indicates the state to associate with the message. state is a tinyint. [This post](https://dba.stackexchange.com/questions/35893/what-is-error-state-in-sql-server-and-how-it-can-be-used) explains why you should/could use `state`. 
 
-> More information about the `THROW` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql?view=sql-server-2017). Another possible statement to handle exceptions is `RAISERROR` but is considered obsolete by Microsoft, you can find more information [here](> More information about the `RAISERROR` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/raiserror-transact-sql?view=sql-server-2017).
+> More information about the `THROW` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql?view=sql-server-2017). Another possible statement to handle exceptions is `RAISERROR` but is considered obsolete by Microsoft. More information about the `RAISERROR` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/raiserror-transact-sql?view=sql-server-2017).
 
 ##### Example
 ```sql
