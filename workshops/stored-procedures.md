@@ -36,12 +36,9 @@ ROLLBACK
 ### Tips
 1. Ask yourself what the use case of this exercise is.
 2. Look at the data/tables which are needed for the use case
-    - Supplier
-    - Order
-    - Are there any other tables that are involved?
 3. Write out the code that is needed to complete the use case.
     - You'll need a subquery to get all the `orders`.
-    - Delete the `orders` from the subquery.
+    - Delete the `orders` based on the results from the subquery.
 4. Wrap the use case inside a stored procedure
 
 ### Deep Dive
