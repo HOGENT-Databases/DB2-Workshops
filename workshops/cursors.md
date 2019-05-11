@@ -6,7 +6,7 @@ In this workshop you'll learn how to create and use a Cursor.
 - Finalized the exercises about stored procedures.
 
 ## Introduction
-In the previous workshop, you wrote a stored procedure to delete all orders for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders. However the stored procedure didn't work due to a **foreign key constraint**.
+In the previous workshop about [stored procedures](/workshops/stored-procedures.md), you wrote a stored procedure to delete all orders for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders. However the stored procedure didn't work due to a **foreign key constraint**.
 
 #### Code for the previous exercise
 
@@ -17,9 +17,10 @@ ALTER PROCEDURE [dbo].[DeleteOrdersFromSupplier]
 AS
   DELETE FROM orders WHERE orderid in 
   (
-   SELECT orderid
-   FROM product p JOIN ordersdetail od ON p.ProductID=od.productid
-   WHERE supplierid = @supplierid
+   SELECT DISTINCT OrderId
+   FROM OrdersDetail 
+   JOIN Product ON Product.ProductID=OrderDetail.ProductId
+   WHERE SupplierID = @supplierid
   )
   SET @nrdeletedorders = @@ROWCOUNT
 ```
@@ -42,10 +43,11 @@ Make sure the following code can be executed:
 ```sql
 BEGIN TRANSACTION
 
-DECLARE @amountOfOrders int,@amountOfOrdersDetails int
-EXEC DeleteOrdersFromSupplier2 6,@amountOfOrders OUT, @amountOfOrdersDetails OUT
-PRINT 'Amount of deleted orders = ' + str(@amountOfOrders)
-PRINT 'Amount of deleted orderdetails = ' + str(@amountOfOrdersDetails)
+DECLARE @amountOfOrdersDeleted INT, 
+        @amountOfOrdersDetailsDeleted INT
+EXEC DeleteOrdersFromSupplier2 2, @amountOfOrdersDeleted OUTPUT, @amountOfOrdersDetailsDeleted OUTPUT
+PRINT FORMATMESSAGE('Amount of deleted orders :%d', @amountOfOrdersDeleted)
+PRINT FORMATMESSAGE('Amount of deleted orderdetails :%d', @amountOfOrdersDetailsDeleted)
 
 ROLLBACK;
 ```
@@ -60,7 +62,7 @@ ROLLBACK;
 - Use a `loop` while there are still unprocessed records;
     - Delete some records in the loop;
     - Don't forget to increase your `counters` for the output.
-    - `Fetch` next record
+    - read the next record
 - Don't forget to `close` and `dealloc` your cursor.
 
 ## Deep Dive
