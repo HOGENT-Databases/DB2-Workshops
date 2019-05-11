@@ -48,7 +48,7 @@ ROLLBACK
 3. Can you `EXECUTE`/`EXEC` a `Stored Procedure` inside a `Function`?
 
 ### Solution
-A possible solution of exercise 1 can be found [here](/solutions/stored-procedures-1.sql)
+A possible solution of exercise 1 can be found [here](solutions/stored-procedures-1.sql)
 
 ---
 
@@ -113,4 +113,4 @@ THROW 50000, 'The record does not exist.', 1;
 ```
 
 ### Solution
-A possible solution of exercise 2 can be found [here](/solutions/stored-procedures-2.sql)
+A possible solution of exercise 2 can be found [here](solutions/stored-procedures-2.sql)

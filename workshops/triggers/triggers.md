@@ -41,7 +41,7 @@ ROLLBACK
 4. Read more about triggers in [this article](https://docs.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql?view=sql-server-2017), if you want to know more about `naming conventions` [this article](https://www.c-sharpcorner.com/UploadFile/f0b2ed/what-is-naming-convention/) can provide some insight.
 
 ### Solution
-A possible solution of exercise 1 can be found [here](/solutions/triggers-1.sql)
+A possible solution of exercise 1 can be found [here](solutions/triggers-1.sql)
 
 ---
 
@@ -89,7 +89,7 @@ ROLLBACK
 2. What is the difference between `GETDATE()` and `GETUTCDATE()`?
 
 ### Solution
-A possible solution of exercise 2 can be found [here](/solutions/triggers-2.sql)
+A possible solution of exercise 2 can be found [here](solutions/triggers-2.sql)
 
 ---
 
@@ -147,4 +147,4 @@ ROLLBACK
 ```
 
 ### Solution
-A possible solution of exercise 3 can be found [here](/solutions/triggers-3.sql)
+A possible solution of exercise 3 can be found [here](solutions/triggers-3.sql)

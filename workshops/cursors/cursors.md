@@ -71,4 +71,4 @@ ROLLBACK;
 2. Is a close instruction necessary when you deallocate a cursor?
 
 ## Solution
-A possible solution of this exercise can be found [here](/solutions/cursors.sql)
+A possible solution of this exercise can be found [here](solutions/cursors.sql)

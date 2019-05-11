@@ -8,8 +8,8 @@ In this repository all the workshops of Databases II are provided, simply follow
 
 | Workshop | Topics |
 | ----- | ---- |
-| [Stored Procedures](/workshops/stored-procedures.md) | Learn about re-using code with Stored Procedures. |
-| [Triggers](/workshops/triggers.md) | Learn about cascading actions with triggers. |
-| [Cursors](/workshops/cursors.md) | Learn about navigating through data with cursors. |
-| [Temporary Tables](/workshops/temp-tables.md) | Learn about storing temp. data. |
-| [Dynamic-SQL](/workshops/dynamic-sql.md) | Learn about writing dynamic and flexbile SQL Statements. |
+| [01 - Stored Procedures](/workshops/stored-procedures/stored-procedures.md) | Learn about re-using code with Stored Procedures. |
+| [02 - Triggers](/workshops/triggers/triggers.md) | Learn about cascading actions with triggers. |
+| [03 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. |
+| [04 - Temporary Tables](/workshops/temp-tables/temp-tables.md) | Learn about storing temp. data. |
+| [05 - Dynamic-SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing dynamic and flexbile SQL Statements. |

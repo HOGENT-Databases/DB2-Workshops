@@ -29,7 +29,7 @@ BEGIN TRY
 END TRY
 
 BEGIN CATCH
-    PRINT FORMATMESSAGE('Error:%s in procedure %s at line %d',ERROR_MESSAGE(),ERROR_PROCEDURE(), ERROR_LINE());
+    PRINT FORMATMESSAGE('Error: %s in procedure %s at line %d',ERROR_MESSAGE(),ERROR_PROCEDURE(), ERROR_LINE());
 END CATCH
 
 ROLLBACK;
@@ -47,4 +47,4 @@ ROLLBACK;
 1. What is the difference between a local and global temporary table?
 
 ## Solution
-A possible solution of this exercise can be found [here](/solutions/temp-tables.sql)
+A possible solution of this exercise can be found [here](solutions/temp-tables.sql)
