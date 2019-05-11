@@ -1,24 +1,30 @@
-alter procedure DeleteOrdersFromSupplier3 @supplierid int,@nrdeletedorders int out,@nrdeleteddetails int out
-as
-begin
-set nocount on;
-if not exists (select null from supplier where supplierid = @supplierid)
-begin
-declare @msg varchar(200) 
-set @msg = 'Supplier ' + cast(@supplierid as varchar) + ' doesn''t exist';
-throw 50000,@msg,1 -- always use ; in front of throw !
-end
+ALTER PROCEDURE DeleteOrdersFromSupplier3 
+    @supplierid INT,
+    @nrdeletedorders INT OUT,
+    @nrdeleteddetails INT OUT
+AS
+SET NOCOUNT ON;
+IF NOT EXISTS (SELECT NULL FROM Supplier WHERE SupplierID = @supplierid)
+BEGIN
+    DECLARE @message NVARCHAR(200) = FORMATMESSAGE('Supplier with id: %d, does not exist',@supplierid);
+    THROW 50000,@message,1;  -- always use ; in front of throw.
+                             -- FormatMessage cannot directly be used in a THROW statement.
+END;
 
-create table #orders (orderid int)
+-- Create a temp. table
+CREATE TABLE #Orders (OrderID INT) -- Note the '#'
 
-insert into #orders
-select distinct orderid
-from product p join ordersdetail od on p.ProductID=od.productid
-where supplierid = @supplierid
+-- Insert all orders in scope in the temp. table
+INSERT INTO #Orders
+SELECT DISTINCT OrderID
+FROM OrdersDetail 
+JOIN Product on Product.ProductID = OrdersDetail.ProductID
+WHERE SupplierID = @supplierid;
 
-delete from ordersdetail where orderid in (select orderid from #orders)
-set @nrdeleteddetails = @@rowcount
+-- Delete all orderdetails based on the temp. table
+DELETE FROM OrdersDetail WHERE OrderID IN (SELECT OrderID FROM #Orders);
+SET @nrdeleteddetails = @@ROWCOUNT;
 
-delete from orders where orderid in (select orderid from #orders)
-set @nrdeletedorders = @@rowcount
-end
+-- Deleta all orders based on the temp. table
+DELETE FROM Orders WHERE OrderID IN (SELECT OrderID FROM #Orders);
+SET @nrdeletedorders = @@rowcount;

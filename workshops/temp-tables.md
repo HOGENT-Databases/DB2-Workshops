@@ -18,19 +18,18 @@ Make sure the following code can be executed:
 
 ```sql
 BEGIN TRANSACTION
-
 BEGIN TRY
-    DECLARE @amountOfOrders int, @amountOfOrdersDetails int
+    DECLARE @amountOfOrders int, 
+            @amountOfOrdersDetails int;
 
-    EXEC DeleteOrdersFromSupplier3 5,@amountOfOrders OUT, @amountOfOrdersDetails OUT
+    EXEC DeleteOrdersFromSupplier3 2,@amountOfOrders OUT, @amountOfOrdersDetails OUT;
 
-    PRINT 'Amount of deleted orders = ' + str(@amountOfOrders)
-    PRINT 'Amount of deleted orderdetails = ' + str(@amountOfOrdersDetails)
-
+    PRINT FORMATMESSAGE('Amount of deleted orders  : %d',@amountOfOrders);
+    PRINT FORMATMESSAGE('Amount of deleted details : %d',@amountOfOrdersDetails);
 END TRY
 
 BEGIN CATCH
-PRINT 'Oops: error ''' + error_message() + ''' in procedure ' + error_procedure() + ' at line ' + cast(error_line() as varchar)
+    PRINT FORMATMESSAGE('Error:%s in procedure %s at line %d',ERROR_MESSAGE(),ERROR_PROCEDURE(), ERROR_LINE());
 END CATCH
 
 ROLLBACK;
