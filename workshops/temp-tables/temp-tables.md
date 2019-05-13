@@ -47,4 +47,4 @@ ROLLBACK;
 1. What is the difference between a local and global temporary table?
 
 ## Solution
-A possible solution of this exercise can be found [here](solutions/temp-tables.sql)
+A possible solution of this exercise can be found [here](solutions/temp-tables-1.sql)
