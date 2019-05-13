@@ -25,6 +25,6 @@ WHERE SupplierID = @supplierid;
 DELETE FROM OrdersDetail WHERE OrderID IN (SELECT OrderID FROM #Orders);
 SET @nrdeleteddetails = @@ROWCOUNT;
 
--- Deleta all orders based on the temp. table
+-- Delete all orders based on the temp. table
 DELETE FROM Orders WHERE OrderID IN (SELECT OrderID FROM #Orders);
 SET @nrdeletedorders = @@rowcount;
