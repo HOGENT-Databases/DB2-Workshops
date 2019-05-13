@@ -397,8 +397,14 @@ AS N'<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:t="http://sc
 ## Exercises 
 For the exercises use database **xtreme**.
 ### Exercise 1
-Complete the following steps 
-Download books.xml from Chamilo and execute this code. This piece of code will create a new table and will load existing XML in the table. From then, you can process the XML in T-SQL.  
+#### Prerequisites
+Download the books.xml file by
+1. Going to [this link](data/books.xml);
+2. On the top-right of the page, click the `RAW` button;
+3. Right click the page and click `save as`;
+4. Replace the `My-Path\Datanken II` in the following code to the path where you stored the file `books.xml`.
+
+Once the file has been downloaded and the correct location of the file is provided, execute the code. The piece of code will create a new table and will load the existing XML content of the file in the table. From there, you can process the XML in T-SQL.  
 
 ```sql
 CREATE TABLE T (
@@ -452,6 +458,7 @@ FROM T
 
 #### Deep Dive
 More information about bulk importing data can be found [here](https://docs.microsoft.com/en-us/sql/relational-databases/import-export/examples-of-bulk-import-and-export-of-xml-documents-sql-server?view=sql-server-2017).
+
 #### Solution
 A possible solution of exercise 1 is not present since the exercises guides you to the solution.
 
