@@ -19,7 +19,7 @@ AS
   (
    SELECT DISTINCT OrderId
    FROM OrdersDetail 
-   JOIN Product ON Product.ProductID=OrderDetail.ProductId
+   JOIN Product ON Product.ProductID=OrdersDetail.ProductId
    WHERE SupplierID = @supplierid
   )
   SET @nrdeletedorders = @@ROWCOUNT
