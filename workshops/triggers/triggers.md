@@ -70,15 +70,18 @@ Make sure the following code can be executed:
 
 ```sql
 BEGIN TRANSACTION
+DECLARE @productId INT;
+
+SET @productId = 12;
 INSERT INTO Product(ProductID, ProductName)
-VALUES(12, 'New product12')
+VALUES(@productId, 'New product12')
 
 UPDATE Product
 SET productName = 'abc'
-WHERE ProductID = 12
+WHERE ProductID = @productId
 
 DELETE FROM Product
-WHERE ProductID = 12
+WHERE ProductID = @productId
 
 SELECT * FROM ProductAudit -- Changes should be seen here.
 ROLLBACK
