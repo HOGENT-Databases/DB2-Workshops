@@ -13,7 +13,7 @@ In this repository all the workshops of Databases II are provided, simply follow
 | [03 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. |
 | [04 - Temporary Tables](/workshops/temp-tables/temp-tables.md) | Learn about storing temp. data. |
 | [05 - Dynamic-SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing dynamic and flexbile SQL Statements. (In Progress) |
-| [06 - Performace](/workshops/performance/performance.md) | Learn about writing performant queries using Indices. (In Progress)|
+| [06 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices. (In Progress)|
 | [07 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML|
 
 ## Notebooks
