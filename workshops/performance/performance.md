@@ -13,6 +13,10 @@ In this workshop we'll use the a fragment of the famous Stack Overflow database 
 Since the folks at Stack Overflow were so friendly to open-source their data, we can take a look around in the database. 
 
 ### Call to action
+0. Execute the following command to change ownership of the database:
+    ```sql
+    use [StackOverflow2010] EXEC sp_changedbowner 'sa'
+    ```
 1. Draw the database diagram using SSMS;
 2. Which table will contain the most amount of records, in other words which table is the biggest?
 3. How many records does the table hold?
