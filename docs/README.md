@@ -15,6 +15,7 @@ In this repository all the workshops of Databases II are provided, simply follow
 | [05 - Dynamic-SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing dynamic and flexbile SQL Statements. (In Progress) |
 | [06 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices. (In Progress)|
 | [07 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML|
+| [08 - Transactions](/workshops/transactions/transactions.md) | Learn about isolation levels and transactions. |
 
 ## Notebooks
 In certain workshops a `.IPYNB` file is provided, this file can be opened with `Azure Data Studio` and can give you some more insight. Basically it combines SQL statements which can be executed and some additional information how the statement works. 
