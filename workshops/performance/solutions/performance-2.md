@@ -1,4 +1,4 @@
-# Solutions - Performance
+# Solutions - Performance 2
 ## Exercise 2.1
 ### Index
 ```sql
