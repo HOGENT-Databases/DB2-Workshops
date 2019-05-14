@@ -1,5 +1,5 @@
 # Workshop - Data Formatting using XML
-In this workshop you'll learn hwo to to parse and process `XML` in **SQL Server**. You will learn how to treat XML as a data type in SQL Server. You can parse any of the SQL Server string data types, such as `[n][var]char`, `[n]text`, `varbinary` and `image`, into the `XML` data type by casting (`CAST`) or converting (`CONVERT`) the `string` to the `XML` data type. Untyped XML is checked to confirm that it is well formed. If there is a **schema** associated with the XML type, validation is also performed. 
+In this workshop you'll learn hwo to to parse, process and treat XML as a data type`XML` in **SQL Server**. You can parse any of the SQL Server string data types, such as `[n][var]char`, `[n]text`, `varbinary` and `image`, into the `XML` data type by casting (`CAST`) or converting (`CONVERT`) the `string` to the `XML` data type. Untyped XML is checked to confirm that it is well formed. If there is a **schema** associated with the XML type, validation is also performed. 
 
 ## Prerequisites
 - A running copy of database **xtreme** for the exercises;
