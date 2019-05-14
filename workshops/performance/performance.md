@@ -34,7 +34,8 @@ Since the folks at Stack Overflow were so friendly to open-source their data, we
 8. Is there a big difference? Explain why by using the correct terms found in the PowerPoint presentation.
 
 ### Solution
-A possible solution of exercise 1 can be found [here](solutions/performance-1.md)
+A possible solution of exercise 1 can be found [here](solutions/performance-1.md).
+
 ---
 
 ## Exercise 2 - Optimization
@@ -53,20 +54,20 @@ Show the following columns of all the `posts` in the most efficient way:
     - `title`
     > How can you check if your result is executed in the most efficient way? Is the actual table used or are you using an index?  
 3. Create an index on title. Then explain the difference (in the execution plan) between following queries:  
-```sql
-SELECT Id
-      ,Title 
-FROM Posts  
-WHERE Title LIKE '%php%'; 
-``` 
-```sql
-SELECT Id
-      ,Title 
-FROM Posts  
-WHERE Title LIKE 'php%';
-```
+    ```sql
+    SELECT Id
+        ,Title 
+    FROM Posts  
+    WHERE Title LIKE '%php%'; 
+    ``` 
+    ```sql
+    SELECT Id
+        ,Title 
+    FROM Posts  
+    WHERE Title LIKE 'php%';
+    ```
 
 ### Solution
-A possible solution of exercise 2 can be found [here](solutions/performance-2.md)
+A possible solution of exercise 2 can be found [here](solutions/performance-2.md).
 
 ---
