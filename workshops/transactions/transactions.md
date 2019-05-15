@@ -44,7 +44,7 @@ SQL Server supports four traditional isolation levels that are based on pessimis
 Is the **least** restrictive isolation level because it **ignores locks placed by other transactions**. Transactions executing under `READ UNCOMMITTED` can read modified data values that have not yet been committed by other transactions; these are called "dirty" reads.
 
 #### Session 1
-Create a new Query Window in SSMS **CTRL+N**, afterwards execute the following code in this query window, let's call it **Session 1**. Make sure to look at the messages tab in SSMS.
+Create a new Query Window in SSMS **(CTRL+N)**, afterwards execute the following code in this query window, let's call it **Session 1**. Make sure to look at the messages tab in SSMS.
 ```sql
 BEGIN TRANSACTION
 DECLARE @startMessage varchar(200) = 'Transaction started at ' + CONVERT(varchar, SYSDATETIME(), 121)
@@ -63,7 +63,6 @@ RAISERROR(@endMessage,0,0) WITH NOWAIT
 > The previous code starts a transaction, updates the `EmpSalary` to `25.000`, waits for 20 seconds to simulate a long statement and after 20 seconds, the transaction is `rolledback`. Within those 20 seconds of waiting make sure to trigger the following piece of code for **Session 2**. If you waited too long you can execute **Session 1** again.
 
 #### Session 2
-Create another Query Window in SSMS **CTRL+N**, afterwards execute the following code in this query window, let's call it Session 1.
 Execute the following code in another query window, let's call it **Session 2**.
 ```sql
 SET NOCOUNT ON;
@@ -81,7 +80,7 @@ RAISERROR(@endMessage,0,0) WITH NOWAIT
 > **Result**
 > 1. **Session 1** tried to update the salary;
 > 2. During the update of **Session 1**, **Session 2** read the data after it was updated by **Session 1**, however the transaction of **Session 2** was not committed yet.
-> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen but **Session 1** is already using the updated values.
+> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen but **Session 1** is already using the updated values, also known as a `dirty read`.
 
 ### READ COMMITTED
 Is the default isolation level for SQL Server. It **prevents dirty reads** by specifying that statements **cannot** read data values that **have been modified but not yet committed by other transactions**. Other transactions can still modify, insert, or delete data between executions of individual statements within the current transaction, resulting in non-repeatable reads, or "phantom" data.
