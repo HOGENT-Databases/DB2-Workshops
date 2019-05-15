@@ -1,4 +1,4 @@
-# Tranactions - Isolation Levels
+# Transactions - Isolation Levels
 Isolation levels determine the behavior of concurrent users who read or write data. A reader is any statement that selects data, using a shared lock by default. A writer is any statement that makes a modification to a table and requires an exclusive lock. **You cannot control the way writers behave in terms of the locks that they acquire and the duration of the locks, but you can control the way readers behave.** Also, as a result of controlling the behavior of readers, you can have an **implicit influence on the behavior of writers.** You do so by setting the isolation level, either at the session level with a session option or at the query level with a table hint. 
 
 
