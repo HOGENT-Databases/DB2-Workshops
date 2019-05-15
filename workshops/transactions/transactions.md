@@ -54,10 +54,10 @@ UPDATE  dbo.TestIsolationLevels
 SET     EmpSalary = 25000
 WHERE   EmpID = 2900
 
-RAISERROR('Update happend, waiting 20 seconds to ROLLBACK',0,0) WITH NOWAIT
+RAISERROR('Update happened, waiting 20 seconds to ROLLBACK',0,0) WITH NOWAIT
 WAITFOR DELAY '00:00:20'
 ROLLBACK;
-DECLARE @endMessage varchar(200) = 'Rollback happend at ' + CONVERT(varchar, SYSDATETIME(), 121)
+DECLARE @endMessage varchar(200) = 'Rollback happened at ' + CONVERT(varchar, SYSDATETIME(), 121)
 RAISERROR(@endMessage,0,0) WITH NOWAIT
 ```
 > The previous code starts a transaction, updates the `EmpSalary` to `25.000`, waits for 20 seconds to simulate a long statement and after 20 seconds, the transaction is `rolledback`. Within those 20 seconds of waiting make sure to trigger the following piece of code for **Session 2**. If you waited too long you can execute **Session 1** again.
@@ -81,7 +81,7 @@ RAISERROR(@endMessage,0,0) WITH NOWAIT
 > **Result**
 > 1. **Session 1** tried to update the salary;
 > 2. During the update of **Session 1**, **Session 2** read the data after it was updated by **Session 1**, however the transaction of **Session 2** was not committed yet.
-> 3. **Session 1** did a rollback of it's changes, so basically the update did not happend but **Session 1** is already using the updated values.
+> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen but **Session 1** is already using the updated values.
 
 ### READ COMMITTED
 Is the default isolation level for SQL Server. It **prevents dirty reads** by specifying that statements **cannot** read data values that **have been modified but not yet committed by other transactions**. Other transactions can still modify, insert, or delete data between executions of individual statements within the current transaction, resulting in non-repeatable reads, or "phantom" data.
@@ -96,10 +96,10 @@ UPDATE  dbo.TestIsolationLevels
 SET     EmpSalary = 25000
 WHERE   EmpID = 2900
 
-RAISERROR('Update happend, waiting 20 seconds to ROLLBACK',0,0) WITH NOWAIT
+RAISERROR('Update happened, waiting 20 seconds to ROLLBACK',0,0) WITH NOWAIT
 WAITFOR DELAY '00:00:20'
 ROLLBACK;
-DECLARE @endMessage varchar(200) = 'Rollback happend at ' + CONVERT(varchar, SYSDATETIME(), 121)
+DECLARE @endMessage varchar(200) = 'Rollback happened at ' + CONVERT(varchar, SYSDATETIME(), 121)
 RAISERROR(@endMessage,0,0) WITH NOWAIT
 ```
 > The previous code starts a transaction, updates the `EmpSalary` to `25.000`, waits for 20 seconds to simulate a long statement and after 20 seconds, the transaction is `rolledback`. Within those 20 seconds of waiting make sure to trigger the following piece of code for **Session 2**. If you waited too long you can execute **Session 1** again.
@@ -124,7 +124,7 @@ RAISERROR(@endMessage,0,0) WITH NOWAIT
 > **Result** 
 > 1. **Session 1** tried to update the salary;
 > 2. During the update of **Session 1**, **Session 2** tried reading the data after it was updated by **Session 1**, however the transaction of **Session 2** was not committed yet. Therefore **Session 2** is waiting on an action(`ROLLBACK` or `COMMIT`) from **Session 1**.
-> 3. **Session 1** did a rollback of it's changes, so basically the update did not happend. Suddenly **Session 1** can read the values. 
+> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen. Suddenly **Session 1** can read the values. 
 
 #### Issues
 The issue with a `COMMITED READ` is that other transactions can still mutate the data outside of the first transaction. For example:
