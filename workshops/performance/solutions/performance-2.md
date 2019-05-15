@@ -14,7 +14,7 @@ SELECT Id
       ,Body
       ,LastEditorDisplayName
 FROM Posts 
-WHERE Year(creationdate) = 2009; -- Usage of a function
+WHERE Year(creationdate) = 2008; -- Usage of a function
 ```
 > The following is an example of a **good** query rather do this instead.
 ```sql
@@ -22,7 +22,7 @@ SELECT Id
       ,Body
       ,LastEditorDisplayName
 FROM Posts 
-where CreationDate BETWEEN '2009-01-01' AND '2009-12-31';
+where CreationDate BETWEEN '2008-01-01' AND '2008-12-31';
 ```
 ## Exercise 2.2
 ### Index
