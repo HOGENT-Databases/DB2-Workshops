@@ -19,3 +19,6 @@ In this repository all the workshops of Databases II are provided, simply follow
 
 ## Notebooks
 In certain workshops a `.IPYNB` file is provided, this file can be opened with `Azure Data Studio` and can give you some more insight. Basically it combines SQL statements which can be executed and some additional information how the statement works. 
+
+## Contributions and feedback
+Please feel free to open issues, fix bugs/typo's or provide feedback.
