@@ -12,10 +12,9 @@ In this repository all the workshops of Databases II are provided, simply follow
 | [02 - Triggers](/workshops/triggers/triggers.md) | Learn about cascading actions with triggers. |
 | [03 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. |
 | [04 - Temporary Tables](/workshops/temp-tables/temp-tables.md) | Learn about storing temp. data. |
-| [05 - Dynamic-SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing dynamic and flexbile SQL Statements. (In Progress) |
-| [06 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices. (In Progress)|
-| [07 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML|
-| [08 - Transactions](/workshops/transactions/transactions.md) | Learn about isolation levels and transactions. |
+| [05 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices. (In Progress)|
+| [06 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML|
+| [07 - Transactions](/workshops/transactions/transactions.md) | Learn about isolation levels and transactions. |
 
 ## Notebooks
 In certain workshops a `.IPYNB` file is provided, this file can be opened with `Azure Data Studio` and can give you some more insight. Basically it combines SQL statements which can be executed and some additional information how the statement works. 
