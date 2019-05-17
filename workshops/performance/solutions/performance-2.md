@@ -39,4 +39,4 @@ FROM Posts
 ORDER BY Score DESC, CommentCount DESC; 
 ```
 ### Exercise 2.3
-Usage of the `%` at the **start** or in the **middle** of a `LIKE` statement **skips the use of an `index` and invokes a `table scan`**.
+Usage of the `%` at the **start** or in the **middle** of a `LIKE` statement is to be avoided, especially at the start. However if the use case really needs this kind of query, there is not that much you can do about it.
