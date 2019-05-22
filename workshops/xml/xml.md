@@ -1,5 +1,5 @@
 # Workshop - Data Formatting using XML
-In this workshop you'll learn hwo to to parse, process and treat XML as a data type`XML` in **SQL Server**. You can parse any of the SQL Server string data types, such as `[n][var]char`, `[n]text`, `varbinary` and `image`, into the `XML` data type by casting (`CAST`) or converting (`CONVERT`) the `string` to the `XML` data type. Untyped XML is checked to confirm that it is well formed. If there is a **schema** associated with the XML type, validation is also performed. 
+In this workshop you'll learn how to to parse, process and treat XML as a data type`XML` in **SQL Server**. You can parse any of the SQL Server string data types, such as `[n][var]char`, `[n]text`, `varbinary` and `image`, into the `XML` data type by casting (`CAST`) or converting (`CONVERT`) the `string` to the `XML` data type. Untyped XML is checked to confirm that it is well formed. If there is a **schema** associated with the XML type, validation is also performed. 
 
 ## Prerequisites
 - A running copy of database **xtreme** for the exercises;
@@ -11,7 +11,7 @@ XML documents can be encoded with different encodings (for example, `UTF-8`, `UT
 Since `NVARCHAR` assumes a **two-byte unicode** encoding such as `UTF-16` or `UCS-2`, the XML parser will treat the string value as a two-byte Unicode encoded XML document or fragment. This means that the XML document needs to be encoded in a two-byte Unicode encoding as well to be compatible with the source data type. A UTF-16 encoded XML document can have a `UTF-16` byte order mark (BOM), but it does not need to, since the context of the source type makes it clear that it can only be a two-byte Unicode encoded document. 
  
 
-The content of a `VARCHAR` string is treated as a **one-byte** encoded XML document/fragment by the XML parser. Since the `VARCHAR` source string has a code page associated, the parser will use that code page for the encoding if no explicit encoding is specified in the XML itself If an XML instance has a BOM or an encoding declaration, the BOM or declaration needs to be consistent with the code page, otherwise the parser will report an error. 
+The content of a `VARCHAR` string is treated as a **one-byte** encoded XML document/fragment by the XML parser. Since the `VARCHAR` source string has a code page associated, the parser will use that code page for the encoding if no explicit encoding is specified in the XML itself. If an XML instance has a BOM or an encoding declaration, the BOM or declaration needs to be consistent with the code page, otherwise the parser will report an error. 
  
 
 The content of `VARBINARY` is treated as a codepoint **stream** that is passed directly to the XML parser. Thus, the XML document or fragment needs to provide the BOM or other encoding information inline. The parser will only look at the stream to determine the encoding. This means that UTF-16 encoded XML needs to provide the `UTF-16` BOM and an instance without BOM and without a declaration encoding will be interpreted as `UTF-8`. 
