@@ -20,4 +20,4 @@ In this repository all the workshops of Databases II are provided, simply follow
 In certain workshops a `.IPYNB` file is provided, this file can be opened with `Azure Data Studio` and can give you some more insight. Basically it combines SQL statements which can be executed and some additional information how the statement works. 
 
 ## Contributions and feedback
-Please feel free to open issues, fix bugs/typo's or provide feedback.
+Please feel free to open issues, fix bugs/typo's or provide feedback. If you want to learn more about Pull Requests, Forks and why we use them in this repository, [this Medium Article](https://zellwk.com/blog/submit-pull-request) can provide some insight
