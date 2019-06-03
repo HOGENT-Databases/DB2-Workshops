@@ -114,3 +114,34 @@ THROW 50000, 'The record does not exist.', 1;
 
 ### Solution
 A possible solution of exercise 2 can be found [here](solutions/stored-procedures-2.sql)
+
+---
+
+## Exercise 3
+We'd like to have 1 stored procedure to insert new `OrderDetails`, however make sure that:
+- the `Order` and `Product` exist;
+- the `Order` has not been `Shipped` yet;
+- the `UnitPrice` is rather optional, use it when it's given else retrieve the product's price from the `product table`;
+- the `Product` is still in `stock`, if it's not return `0` else `1`.
+
+
+### Call to action
+- Create a stored procedure called `SP_Create_OrderDetail` for creating a `OrderDetail`. Make sure all the requirements mentioned above are checked.
+
+### Execution
+Make sure the following code can be executed:
+
+```sql
+-- Version 1
+BEGIN TRANSACTION
+EXECUTE SP_Create_OrderDetail [OrderId] [ProductId] [UnitPrice] [Quantity];
+ROLLBACK
+```
+> Note that the variables are just placeholders, fill in where necessary.
+
+### Tips
+- Make sure you provide all the necessary parameters (even the optional one);
+- Check all the requirements step-by-step if they're not met, `THROW` an exception.
+
+### Solution
+A possible solution of exercise 3 can be found [here](solutions/stored-procedures-3.sql)
