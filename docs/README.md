@@ -12,7 +12,7 @@ In this repository all the workshops of Databases II are provided, simply follow
 | [02 - Triggers](/workshops/triggers/triggers.md) | Learn about cascading actions with triggers. |
 | [03 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. |
 | [04 - Temporary Tables](/workshops/temp-tables/temp-tables.md) | Learn about storing temp. data. |
-| [05 - Dyanmic SQL](/workshops/dyanmic-sql/dyanmic-sql.md) | Learn about writing flexible SQL statements. |
+| [05 - Dynamic SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing flexible SQL statements. |
 | [06 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices.|
 | [07 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML|
 | [08 - Transactions](/workshops/transactions/transactions.md) | Learn about isolation levels and transactions. |
