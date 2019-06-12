@@ -34,7 +34,7 @@ ROLLBACK
 
 ### Deep Dive
 1. Is it also needed to `EXECUTE` the trigger on a `DELETE` or `UPDATE` statement?
-2. What happends if mulitple `Employees` are inserted at the same time?
+2. What happens if multiple `Employees` are inserted at the same time?
 3. Naming conventions for triggers:
     1. Each trigger name should use the syntax  `TR_[TableName]_[ActionName]`.
     2. Each table name and action name should start with a capital letter.
@@ -99,7 +99,7 @@ A possible solution of exercise 2 can be found [here](solutions/triggers-2.sql)
 ## Exercise 3
 For this exercise we'll introduce a new (redundant) attribute/column for the `ProductType` table called `AmountOfProducts` (int). The column will keep track of all the `products` that have this specific `ProductType`. Doing so the amount a `ProductType` is linked to `products` does not have to be recalculated each time on a `SELECT` query but should be updated each time a `product` is `mutated`(Deleted, Inserted or Updated). For this overhead we'll use a `trigger` on the `product` table.
 
-> Redundent data is not always a bad idea, it can speed up the performance drastically when done correctly, since you often read data a lot more than you write it. However this can create some additional complexity or overhead in your database, so be cautious when introducing redundant columns. 
+> Redundant data is not always a bad idea, it can speed up the performance drastically when done correctly, since you often read data a lot more than you write it. However this can create some additional complexity or overhead in your database, so be cautious when introducing redundant columns. 
 
 ### Call to action
 - Add a new column to the table `ProductType`:
