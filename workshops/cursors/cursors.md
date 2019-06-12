@@ -62,11 +62,11 @@ ROLLBACK;
 - Use a `loop` while there are still unprocessed records;
     - Delete some records in the loop;
     - Don't forget to increase your `counters` for the output.
-    - read the next record
+    - Read the next record
 - Don't forget to `close` and `dealloc` your cursor.
 
 ## Deep Dive
-1. What happends if someone else is updating the row(s) you're about to delete?
+1. What happens if someone else is updating the row(s) you're about to delete?
     - Make sure that the selected rows cannot be modified during the execution. 
 2. Is a close instruction necessary when you deallocate a cursor?
 
