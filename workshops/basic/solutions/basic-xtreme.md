@@ -1,6 +1,6 @@
 # Solutions - Revisit the basics
 ## Dataset - Xtreme
-![img](/workshops\shared\images\diagrams\diagram-xtreme.png)
+![img](/workshops/shared/images/diagrams/diagram-xtreme.png)
 
 1. Give the unique names of all products containing the word 'helmet' or with a name of 6 characters.
     ```sql
