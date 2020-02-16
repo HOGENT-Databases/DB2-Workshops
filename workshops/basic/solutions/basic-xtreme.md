@@ -12,17 +12,18 @@
 2. Show the name and the reorderlevel of all products with a level between 50 and 500 (boundaries included)
     ```sql
     SELECT 
-     productName
-    ,reorderLevel​
-    FROM product​
-    WHERE reorderLevel BETWEEN 50 AND 500;
+     ProductName
+    ,ReorderLevel​
+    FROM Product​
+    WHERE ReorderLevel BETWEEN 50 AND 500;
     ```
-3. Count the amount of products (columnname‘amount of products’), AND the amount of products in stock (= unitsinstocknot empty) (columnname‘Units in stock’)
+3. Count the amount of products, give the column the following name  "Amount of Products". In a second column, count the amount of products where the unit in stock is known. Give the second column a descriptive column name.
     ```sql
     SELECT 
-     COUNT(productid)    AS 'Amount of Products'
-    ,COUNT(unitsinstock) AS 'Units in Stock' ​
-    FROM product;
+     COUNT(*)    AS 'Amount of Products'
+    --,COUNT(ProductId)    AS 'Amount of Products' -- Alternative
+    ,COUNT(UnitsInStock) AS 'Products with known Stock' ​
+    FROM Product;
     ```
 4. How many unique supervisors are there?
     ```sql
