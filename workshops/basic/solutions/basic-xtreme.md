@@ -24,14 +24,11 @@
     ,COUNT(unitsinstock) AS 'Units in Stock' ​
     FROM product;
     ```
-4. How many employees have a function of supervisor?
+4. How many unique supervisors are there?
     ```sql
-    SELECT COUNT(DISTINCT supervisorID) + 
-    (SELECT COUNT(*) FROM  employee WHERE supervisorid IS NULL) AS "No. of Supervisors" 
-    FROM employee;
+    SELECT COUNT(DISTINCT SupervisorId) AS "No. of Supervisors" 
+    FROM Employee;
     ```
-    > 1. Count all the unique people who are supervising others;
-    > 2. Count the ones who are not supervised, which means they are supervisors.
 5. Give the date of birth of the youngest employee and the oldest.
     ```sql
     SELECT 

@@ -34,7 +34,8 @@ Below you'll find multiple exercises, for each exercise do the following:
 1. Give the unique names of all products containing the word 'helmet' or with a name of 6 characters.
 2. Show the name and the reorderlevel of all products with a level between 50 and 500 (boundaries included)
 3. Count the amount of products (columnname‘amount of products’), AND the amount of products in stock (= unitsinstocknot empty) (columnname‘Units in stock’)
-4. How many employees have a function of supervisor?
+4. How many unique supervisors are there?
+    > Hint: Count all the unique people who are supervising others;
 5. Give the date of birth of the youngest employee and the oldest.
 6. What’s the number of employees who will retire (at 65) within the first 30 years?
 7. Show a list of different countries where 2 of more suppliers live in, make sure to order alphabeticaly. 
