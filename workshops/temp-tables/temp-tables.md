@@ -6,7 +6,7 @@ In this workshop you'll learn how to create and use a temporary table.
 - Finalised the exercises about stored procedures and cursors.
 
 ## Introduction
-In the [previous workshop about cursors](/workshops/cursors.md), you wrote a stored procedure to delete all orders and orderdetails for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders and orderdetails. However there are always alternative approaches. This time we'll use a temporarly table to delete all the orders for a given supplier.
+In the [previous workshop about cursors](/workshops/cursors/cursors.md), you wrote a stored procedure to delete all orders and orderdetails for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders and orderdetails. However there are always alternative approaches. This time we'll use a temporarly table to delete all the orders for a given supplier.
 
 ## Call to action
 - Adjust the stored procedure to delete all `orders` and `orderdetails` for a given `supplierId` using a `temporarly table`.
