@@ -32,7 +32,7 @@ Below you'll find multiple exercises, for each exercise do the following:
 
 ## Exercises
 1. In which towns do more than 5 players live, provide the name of the town and the amount of players who live there.
-2. Give the name and total penalty amount for each player ​that already has a total of more than or equal to 150 euro in penalties.
+2. Give the name and total penalty amount for each player that already has a total of more than or equal to 150 euro in penalties.
 
 > If you need more exercises please check the Planten exercises.
 

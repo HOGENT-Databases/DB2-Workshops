@@ -6,19 +6,19 @@
     ```sql
     SELECT 
      Town
-    ,count(*) ​
-    FROM Players ​
-    GROUP BY Town ​
+    ,count(*) 
+    FROM Players 
+    GROUP BY Town 
     HAVING COUNT(*) > 5;
     ```
-2. Give the name and total penalty amount for each player ​that already has a total of more than or equal to 150 euro in penalties.
+2. Give the name and total penalty amount for each player that already has a total of more than or equal to 150 euro in penalties.
     ```sql
     SELECT 
      p.playerno
-    ,SUM(pe.amount)​
+    ,SUM(pe.amount)
     FROM players p 
-        JOIN penalties pe ON p.playerno = pe.playerno​
-    GROUP BY p.playerno​
+        JOIN penalties pe ON p.playerno = pe.playerno
+    GROUP BY p.playerno
     HAVING SUM(pe.amount) >= 150;
     ```
 ## Exercises

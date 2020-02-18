@@ -4,17 +4,17 @@
 
 1. Give the unique names of all products containing the word 'helmet' or with a name of 6 characters.
     ```sql
-    SELECT DISTINCT productName ​
-    FROM product​
-    WHERE productName LIKE '%helmet%' ​
+    SELECT DISTINCT productName 
+    FROM product
+    WHERE productName LIKE '%helmet%' 
         OR productName LIKE '______';
     ```
 2. Show the name and the reorderlevel of all products with a level between 50 and 500 (boundaries included)
     ```sql
     SELECT 
      ProductName
-    ,ReorderLevel​
-    FROM Product​
+    ,ReorderLevel
+    FROM Product
     WHERE ReorderLevel BETWEEN 50 AND 500;
     ```
 3. Count the amount of products, give the column the following name  "Amount of Products". In a second column, count the amount of products where the unit in stock is known. Give the second column a descriptive column name.
@@ -22,7 +22,7 @@
     SELECT 
      COUNT(*)    AS 'Amount of Products'
     --,COUNT(ProductId)    AS 'Amount of Products' -- Alternative
-    ,COUNT(UnitsInStock) AS 'Products with known Stock' ​
+    ,COUNT(UnitsInStock) AS 'Products with known Stock' 
     FROM Product;
     ```
 4. How many unique supervisors are there?
@@ -57,8 +57,8 @@
 7. Show a list of different countries where 2 of more suppliers live in, make sure to order alphabeticaly. 
     ```sql
     SELECT country 
-    FROM supplier ​
-    GROUP BY country ​
+    FROM supplier 
+    GROUP BY country 
     HAVING COUNT(country) >= 2
     ORDER BY country;
     ```
@@ -66,27 +66,27 @@
     ```sql
     SELECT 
      supplierID
-    ,COUNT(*) as "No. of Products" ​
-    FROM product​
-    WHERE price < 100​
-    GROUP BY supplierID​
-    HAVING COUNT(supplierId) >= 10​
+    ,COUNT(*) as "No. of Products" 
+    FROM product
+    WHERE price < 100
+    GROUP BY supplierID
+    HAVING COUNT(supplierId) >= 10
     ORDER BY count(*) DESC;
     ```
 9. Count the number of workers (salary below 40.000), clerks (salary between 40.000 and 50.000 EUR) and managers (salary > 50000). Show 2 columns the name of the role and the amount of people in that role. 
     ```sql
     SELECT 
     CASE
-        WHEN salary < 40000 THEN 'Worker'  ​
-        WHEN salary <= 50000 THEN 'Clerck'  ​
+        WHEN salary < 40000 THEN 'Worker'  
+        WHEN salary <= 50000 THEN 'Clerck'  
         ELSE 'Manager'
     END AS 'Role'
-    , COUNT(salary) AS "Amount"​
-    FROM employee​
-    GROUP BY ​
+    , COUNT(salary) AS "Amount"
+    FROM employee
+    GROUP BY 
     CASE
-        WHEN salary < 40000 THEN 'Worker'  ​
-        WHEN salary <= 50000 THEN 'Clerck'  ​
+        WHEN salary < 40000 THEN 'Worker'  
+        WHEN salary <= 50000 THEN 'Clerck'  
         ELSE 'Manager'
     END
     ```
@@ -97,8 +97,8 @@
       product.supplierID
      ,supplierName
      FROM product
-        JOIN supplier ON product.supplierID = supplier.supplierID     ​
-        JOIN productClass ON product.productClassID = productClass.productClassID​
+        JOIN supplier ON product.supplierID = supplier.supplierID     
+        JOIN productClass ON product.productClassID = productClass.productClassID
     WHERE productClassName = 'Bicycle';
     ```
     > An opposite `JOIN` is also possible, you can start with the `Supplier` table and `JOIN` the `Product, ProductClass` tables.
@@ -109,8 +109,8 @@
     ,supplierName
     ,COUNT(DISTINCT o.orderID) AS 'No. of Orders'
     FROM supplier s 
-        LEFT JOIN product p ON s.supplierID = p.supplierID     ​
-        LEFT JOIN ordersDetail o ON p.productID = o.productID​
+        LEFT JOIN product p ON s.supplierID = p.supplierID     
+        LEFT JOIN ordersDetail o ON p.productID = o.productID
     GROUP BY s.supplierID, supplierName
     ORDER BY supplierName;
     ```
@@ -119,10 +119,10 @@
     ```sql
     SELECT 
      prodT.productTypeName
-    ,MIN(prod.price) AS 'Lowest Price'​
+    ,MIN(prod.price) AS 'Lowest Price'
     FROM product prod
-        JOIN productType prodT ​ON prod.productTypeID = prodT.productTypeID​
-    WHERE prod.m_f = 'Y'​
+        JOIN productType prodT ON prod.productTypeID = prodT.productTypeID
+    WHERE prod.m_f = 'Y'
     GROUP BY prodT.productTypeName;
     ```
 13. Give for each purchased productId: productname, the least and the most ordered. Order by productname.
@@ -131,9 +131,9 @@
      pu.productid
     ,p.productname
     ,MIN(unitsonorder) AS 'Least'
-    ,MAX(unitsonorder)​ AS 'Most'
+    ,MAX(unitsonorder) AS 'Most'
     FROM purchases pu 
-        JOIN product p ON pu.productid=p.productid​
+        JOIN product p ON pu.productid=p.productid
     GROUP BY pu.productid,p.productname;
     ```
 14. Give a summary for each employee with orderID, employeeID and the fullname of the employee. 
@@ -142,9 +142,9 @@
     SELECT 
      ord.orderID
     ,emp.employeeID
-    ,CONCAT(emp.lastName,' ',emp.firstName) AS 'Employee'​
+    ,CONCAT(emp.lastName,' ',emp.firstName) AS 'Employee'
     FROM employee emp
-        LEFT JOIN orders ord ON emp.employeeID = ord.employeeID​
+        LEFT JOIN orders ord ON emp.employeeID = ord.employeeID
     ORDER BY ord.orderID;
     ```
 

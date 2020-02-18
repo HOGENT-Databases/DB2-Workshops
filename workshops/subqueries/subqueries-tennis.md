@@ -20,7 +20,7 @@ Below you'll find multiple exercises, for each exercise do the following:
 ![img](/workshops/shared/images/diagrams/diagram-tennis.png)
 
 ## Exercises
-1. Give the name and number of the players that already got more penalties than​
+1. Give the name and number of the players that already got more penalties than
 they played matches. 
 
 ### Solution

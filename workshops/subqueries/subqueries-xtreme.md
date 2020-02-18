@@ -19,9 +19,9 @@ Below you'll find multiple exercises, for each exercise do the following:
 ![img](/workshops/shared/images/diagrams/diagram-xtreme.png)
 
 ## Exercises
-1. Give the id and name of the products that have not been purchased yet. ​
-2. Select the names of the suppliers who supply products that have not been ordered yet. ​
-3. Select the products (all columns) with a price that is higher than the average price of the "Bicycle" products. Order the results by descending order of the price. ​
+1. Give the id and name of the products that have not been purchased yet. 
+2. Select the names of the suppliers who supply products that have not been ordered yet. 
+3. Select the products (all columns) with a price that is higher than the average price of the "Bicycle" products. Order the results by descending order of the price. 
 4. Show a list of the orderID's of the orders for which the order amount differs from the amount calculated through the ordersdetail. 
 5. Which employee has processed most orders? Show the fullname of the employee and the amount of order he/she processed.
 6. Give per employee and per orderdate the total order amount. Also add the name of the employee and the running total per employee when ordering by orderdate, an example can be seen below. Note that the running total is the sum of all orders where the employee is responsible at the order date's time.

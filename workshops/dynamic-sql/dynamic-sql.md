@@ -18,10 +18,10 @@ We'd like to know for every `ProductClassID` how many products are produced in.
 A possible SQL statement that produces this output is listed below.
 ```sql
 SELECT  Product.ProductClassID,
-        SUM(CASE WHEN Supplier.Country ='USA' THEN 1 ELSE 0 end) AS 'USA',​
-        SUM(CASE WHEN Supplier.Country ='Canada' THEN 1 ELSE 0 end) AS 'Canada',​
-        SUM(CASE WHEN Supplier.Country ='Japan' THEN 1 ELSE 0 end) AS 'Japan',​
-        SUM(CASE WHEN Supplier.Country ='UK' THEN 1 ELSE 0 end) AS 'UK',​
+        SUM(CASE WHEN Supplier.Country ='USA' THEN 1 ELSE 0 end) AS 'USA',
+        SUM(CASE WHEN Supplier.Country ='Canada' THEN 1 ELSE 0 end) AS 'Canada',
+        SUM(CASE WHEN Supplier.Country ='Japan' THEN 1 ELSE 0 end) AS 'Japan',
+        SUM(CASE WHEN Supplier.Country ='UK' THEN 1 ELSE 0 end) AS 'UK',
         COUNT(Product.productid) AS TOTAL
 FROM Product 
 JOIN Supplier ON Product.SupplierID = Supplier.SupplierID
