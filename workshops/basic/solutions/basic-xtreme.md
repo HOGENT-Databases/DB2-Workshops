@@ -35,17 +35,23 @@
     SELECT 
      MIN(birthDate) as 'Eldest'
     ,MAX(birthDate) as 'Youngest' 
-    FROM employee;​
+    FROM employee;
     ```
 6. What’s the number of employees who will retire (at 65) within the first 30 years?
     ```sql
+    SELECT COUNT(*)
+    FROM Employee
+    WHERE DATEDIFF(YEAR,Birthdate,DATEADD(YEAR,30,GETDATE())) >= 65
+    ```
+    Alternative to show the actual rows and not the number:
+    ```sql
     SELECT 
-      employeeid
-     ,birthdate
-     ,DATEDIFF(YEAR,birthdate,GETDATE()) AS 'Current Age'
-     ,DATEDIFF(YEAR,birthdate,DATEADD(year,30,GETDATE())) 'Current Age +30' -- Optiional
-    FROM employee​
-    WHERE DATEDIFF(YEAR,birthdate,DATEADD(YEAR,30,GETDATE())) >= 65;
+      EmployeeId
+     ,Birthdate
+     ,DATEDIFF(YEAR,Birthdate,GETDATE()) AS 'Current Age'
+     ,DATEDIFF(YEAR,Birthdate,DATEADD(YEAR,30,GETDATE())) 'Current Age +30' -- Optional
+    FROM Employee
+    WHERE DATEDIFF(YEAR,Birthdate,DATEADD(YEAR,30,GETDATE())) >= 65;
     ```
     > See Deep Dive for more explanation.
 7. Show a list of different countries where 2 of more suppliers live in, make sure to order alphabeticaly. 
