@@ -19,7 +19,7 @@ Below you'll find a a few exercises, follow the steps **sequentially** to comple
 
 # Exercise 1
 The company wants to weekly check the stock of their products, if the stock is below 15, they'd like to order more to fulfill the need.
-1. Create a `QUERY` that shows the ProductId, ProductName and the name of the supplier.
+1. Create a `QUERY` that shows the ProductId, ProductName and the name of the supplier, do not forget the `WHERE` clause.
 2. Turn this `SELECT` statement into a `VIEW` called: `vw_products_to_order`.
     > If you're struggling with editing or dropping the `VIEW`, the following statement might help:
     ```sql
