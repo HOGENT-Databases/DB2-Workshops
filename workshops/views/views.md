@@ -23,7 +23,7 @@ The company wants to weekly check the stock of their products, if the stock is b
 2. Turn this `SELECT` statement into a `VIEW` called: `vw_products_to_order`.
     > If you're struggling with editing or dropping the `VIEW`, the following statement might help:
     ```sql
-    DROP VIEW IF EXISTS vw_products_to_order
+    DROP VIEW vw_products_to_order
     ```
 3. Query the `VIEW` to see the results.
 
@@ -79,7 +79,7 @@ The products in scope are all the products that start with the term 'Guardian' a
 2. Turn this `SELECT` statement into a `VIEW` called: `vw_price_increasing_products`.
     > If you're struggling with editing or dropping the `VIEW`, the following statement might help:
     ```sql
-    DROP VIEW IF EXISTS vw_price_increasing_products
+    DROP VIEW vw_price_increasing_products
     ```
 3. Query the `VIEW` to see the results.
 4. Increase the price of the resultset of the `VIEW`: `vw_price_increasing_products` by 2%.
