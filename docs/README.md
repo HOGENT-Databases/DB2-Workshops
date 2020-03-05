@@ -4,6 +4,9 @@
 
 In this repository all the workshops of Databases II are provided, simply follow the links below to start a workshop.
 
+## Prerequisites
+To start any workshop, install the required software and databases by following [the installation guide](installation.md)
+
 ## Workshops
 
 | Workshop | Topics |
