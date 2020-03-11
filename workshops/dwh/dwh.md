@@ -208,10 +208,12 @@ The product dimension or the `DimProduct` table is a bit different then the `Dim
     ,d.OrderQty * d.UnitPrice
     FROM AdventureWorks2014.Sales.SalesOrderHeader h 
         JOIN AdventureWorks2014.Sales.SalesOrderDetail d ON h.SalesOrderID = d.SalesOrderID
-        LEFT JOIN DimProduct p ON d.ProductID = p.ProductID
-					      AND ((h.OrderDate BETWEEN p.StartDate AND p.EndDate)
-								OR p.EndDate IS NULL)
-    WHERE d.SalesOrderDetailID > (select isnull(max(SalesOrderLineNumber),0) from factsales)
+        JOIN DimProduct p ON d.ProductID = p.ProductID
+    WHERE 
+    /* Slowly Changing Dimension dimproduct */
+    h.OrderDate >= p.StartDate AND (p.EndDate IS NULL OR h.OrderDate <= p.EndDate)
+    AND /* increment, also make sure it runs from an empty factsales table */
+    d.SalesOrderDetailID > (SELECT ISNULL(MAX(SalesOrderLineNumber),0) FROM factsales);
     ``` 
     ![Insert Into FactSales](images/insert-factsales.gif)
 
