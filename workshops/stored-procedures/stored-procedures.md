@@ -2,53 +2,64 @@
 In this workshop you'll learn how to create and use a Stored Procedure to reuse pieces of code.
 
 ## Prerequisites
-- A running copy of database **xtreme**;
+- SQL Server 2017+ Installed;
+- **S**QL **S**erver **M**anagement **S**tudio Installed;
+- A running copy of the database **xtreme**.
+    > You can download the database by using [this link](https://github.com/HOGENT-Databases/DB2-Workshops/raw/master/databases/xtreme.bak), information on how to restore a database can be found [here](https://docs.microsoft.com/en-us/sql/relational-databases/backup-restore/restore-a-database-backup-using-ssms?view=sql-server-ver15).
 
 ---
 
 ## Exercise 1
-Lately a lot of our `suppliers` are going bankrupt, therefore we'd like to delete all `orders` which contains `products` of a given `supplier`.
+Lately a lot of our `suppliers` are going bankrupt, therefore we'd like to delete all `OrderDetails` which contains a `product` of a given `supplier`. But only for `Orders` placed by `customers` after `2018-04-01`. Finally we would still like to inform the `Customers` that the delivery of the particular product cannot occur. Therefore we need the following information:
+- The name of the customer
+- The title, first- and lastname of the contact person of the customer
 
 ### Call to action
-- Create a new stored procedure called `DeleteOrdersFromSupplier` which deletes all `orders` that contain a `product` of a given supplier.
+- Create a new stored procedure called `DeleteOrderDetailsForBankruptSupplier` which deletes all `OrderDetails` that contain a `product` of a given supplier, given the `SupplierId`. Before deleting the rows, show a resultset with the impacted customers.
 - If the stored procedure already exists, change or delete it first.
-- Return the number of deleted orders as an output parameter. 
+- Show the impacted customers in a resultset, simply query the impacted customers before the delete step in the stored procedure.
+- Return the number of deleted `OrderDetails` as an output parameter. 
 
 ### Execution
 Make sure the following code can be executed:
 ```sql
-BEGIN TRANSACTION
+BEGIN TRANSACTION -- So we can rollback the changes later.
 -- Arrange
-DECLARE @supplierid int,
-         @nrdeletedorders int
-SET @supplierid = 7
--- ACT
-EXECUTE DeleteOrdersFromSupplier 
-        @supplierid, @nrdeletedorders OUTPUT
--- PRINT
-print 'Amount of orders deleted for supplier ' + ltrim(str(@supplierid)) + ' = ' + ltrim(str(@nrdeletedorders))
+DECLARE @supplierid INT,
+        @amountOfDeletedDetails INT
 
-ROLLBACK
+-- Act
+EXECUTE DeleteOrderDetailsForBankruptSupplier 6, @amountOfDeletedDetails OUTPUT
+-- Print
+PRINT CONCAT('Deleted: ',@amountOfDeletedDetails,' of OrderDetail rows, the impacted customers can be seen in the resultset.') 
+ROLLBACK -- Don't change anything so we can keep running the stored procedure.
 ```
-> Chances are that your code will fail to delete the orders, why?
-> A solution will be provided in the chapter about `Cursors`.
+
+### Results
+The result should be the following resultset:
+|CustomerName       |ContactTitle|ContactFirstName|ContactLastName|
+|-------------------|------------|----------------|---------------|
+|City Cyclists      |Mr.         |Chris           |Christianson   |
+|Cycles and Sports  |Mr.         |Zachary         |Barbera        |
+|Magazzini          |Mr.         |Giovanni        |Rovelli        |
+|Warsaw Sports, Inc.|Mr.         |Pavel           |Ropoleski      |
+
+The print statement should output:
+> Deleted: 4 of OrderDetail rows, the impacted customers can be seen in the resultset.
 
 ### Tips
-1. Ask yourself what the use case of this exercise is.
-2. Look at the data/tables which are needed for the use case
+1. Ask yourself what the use case of this exercise is, first complete the use case and afterwards wrap it inside a stored procedure.
+2. Look at the data/tables which are needed for the use case.
 3. Write out the code that is needed to complete the use case.
-    - You'll need a subquery to get all the `orders`.
-    - Delete the `orders` based on the results from the subquery.
 4. Wrap the use case inside a stored procedure
 
 ### Deep Dive
-1. Why is your code failing? A solution will be provided in chapter about `Cursors`.
 1. What is the difference between a `Stored Procedure` and a `User Defined Function`?
 2. Is it possible to mutate data inside a function?
 3. Can you `EXECUTE`/`EXEC` a `Stored Procedure` inside a `Function`?
 
 ### Solution
-A possible solution of exercise 1 can be found [here](solutions/stored-procedures-1.sql)
+A possible solution of exercise 1 can be found [here](solutions/stored-procedures.md/#exercise-1)
 
 ---
 
@@ -56,19 +67,20 @@ A possible solution of exercise 1 can be found [here](solutions/stored-procedure
 We'd like to clean-up the `product` table since a lot of `products` are no longer present in our inventory. However... we have to make sure we don't delete `products` if they're already `purchased` or `ordered` for historical reasons.
 
 ### Call to action
+- Read the [Deep Dive](#Deep-Dive-Exception-Handling)
 - Create a stored procedure called `DeleteProduct1` for deleting a product. You can only delete a product if
     - The `product` exists
     - There are no `purchases` for the `product`
     - There are no `orders` for the `product`
     - Check these conditions before deleting the product, so you don’t rely on SQL Server messages. Generate an appropriate error message if the product can’t be deleted. 
-    - Use `RAISERROR` or `THROW` (see Deep Dive further in this document)
+    - Use `RAISERROR` or `THROW`
         - It's better to fail immediatly and show the error when something goes wrong as soon as possible and stop the execution of the stored procedure. (also known as Defensive Programming).
 - Create a stored procedure called `DeleteProduct2` (similar to `DeleteProduct1`) for deleting a product. 
 You can only delete a product if:
     - The `product` exists
     - There are no `purchases` for the `product`
     - There are no `orders` for the `product`
-    - In this version version you try to delete the product and catch the exeptions that might occur **inside** the stored procedure and `PRINT` a message to the console.
+    - In this version version you try to delete the product and catch the exceptions that might occur **inside** the stored procedure and `PRINT` a message to the console.
 - Test your procedures. Give the `SELECT` statements to find appropriate test data. 
 
 ### Execution
@@ -87,18 +99,23 @@ ROLLBACK
 
 ### Tips
 - Version 1
-    - First check and then `DELETE`
+    - First check and then `DELETE`, for example:
+        ```sql
+        IF NOT EXISTS (SELECT NULL FROM Product WHERE ProductID = @productid)
+        THROW 50001, 'The product doesn''t exist',1;  
+        ```
     - What are the SELECT statements to check if :
-        - The `product` exists
         - There are no `purchases` for the `product`
         - There are no `orders` for the `product`
 - Version 2
-- First try to `DELETE` and then check the `ERROR_NUMBER()`.
+    - Wrap your `DELETE` statement is a `TRY...CATCH` block
+    - Check how many rows were mutated by using `@@ROWCOUNT`
+    - If the `@@ROWCOUNT` is `0`, something went wrong and you should `THROW` a custom error message.
+    - In the `CATCH` block you can check the `ERROR_NUMBER()` for custom error messages or database generated errors for example Foreign Key Constraints.
 
 ### Deep Dive Exception Handling
 #### The THROW statement
-Raises an exception and transfers execution to a CATCH block of a TRY...CATCH construct, or stops the execution of a stored procedure.
-> Remark: Only available in SQL Server 2012 and higher.
+Raises an exception and transfers execution to a `CATCH` block of a `TRY...CATCH` construct, or stops the execution of a stored procedure.
 
 ##### Arugments
 - `error_number` is a constant or variable that represents the exception. error_number is int and must be greater than or equal to 50000 and less than or equal to 2147483647.
@@ -107,13 +124,28 @@ Raises an exception and transfers execution to a CATCH block of a TRY...CATCH co
 
 > More information about the `THROW` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql?view=sql-server-2017). Another possible statement to handle exceptions is `RAISERROR` but is considered obsolete by Microsoft. More information about the `RAISERROR` statement can be found [here](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/raiserror-transact-sql?view=sql-server-2017).
 
-##### Example
+##### Examples
 ```sql
 THROW 50000, 'The record does not exist.', 1;  
 ```
 
+```sql
+BEGIN TRY
+	INSERT INTO Customer (CustomerID, CustomerName)
+				VALUES (1,'testing')
+END TRY
+BEGIN CATCH
+	PRINT 'Some error occured...'
+	PRINT error_message()
+	PRINT error_number()
+	PRINT error_procedure()
+	PRINT error_line()
+	PRINT error_severity()
+END CATCH
+```
+
 ### Solution
-A possible solution of exercise 2 can be found [here](solutions/stored-procedures-2.sql)
+A possible solution of exercise 2 can be found [here](solutions/stored-procedures.md/#exercise-2)
 
 ---
 
@@ -144,4 +176,4 @@ ROLLBACK
 - Check all the requirements step-by-step if they're not met, `THROW` an exception.
 
 ### Solution
-A possible solution of exercise 3 can be found [here](solutions/stored-procedures-3.sql)
+A possible solution of exercise 3 can be found [here](solutions/stored-procedures.md/#exercise-3)
