@@ -6,7 +6,7 @@ In this workshop you'll learn how to create and use a Cursor.
 - Finalized the exercises about stored procedures.
 
 ## Introduction
-In the previous workshop about [stored procedures](/workshops/stored-procedures/stored-procedures.md), you wrote a stored procedure to delete all orders for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders. However the stored procedure didn't work due to a **foreign key constraint**.
+In the previous workshop about [stored procedures](/workshops/stored-procedures/stored-procedures.md/#exercise-4), you wrote a stored procedure to delete all orders for a given supplier called `DeleteOrdersFromSupplier`, the output parameter/return value of this stored procedure was the number of deleted orders. However the stored procedure didn't work due to a **foreign key constraint**.
 
 #### Code for the previous exercise
 
@@ -30,7 +30,7 @@ AS
 DECLARE @supplier int,@amount int
 SET @supplier = 7
 EXEC DeleteOrdersFromSupplier @supplier, @amount output
-PRINT 'Amount of  orderdetails for supplier ' + LTRIM(STR(@supplier)) + ' = ' + LTRIM(STR(@amount))
+PRINT CONCAT('Deleted: ',@amountOfDeletedDetails,' of OrderDetail rows, the impacted customers can be seen in the resultset.') 
 ```
 
 ## Call to action

@@ -177,3 +177,49 @@ ROLLBACK
 
 ### Solution
 A possible solution of exercise 3 can be found [here](solutions/stored-procedures.md/#exercise-3)
+
+---
+
+## Exercise 4
+This exercise is closely related to [exercise 1](#exercise-1), but is different in many ways.
+Lately a lot of our `suppliers` are going bankrupt, therefore we'd like to delete all `orders` which contains `products` of a given `supplier`.
+
+### Call to action
+- Create a new stored procedure called `DeleteOrdersFromSupplier` which deletes all `orders` that contain a `product` of a given supplier.
+- If the stored procedure already exists, change or delete it first.
+- Return the number of deleted `orders` as an output parameter. 
+
+### Execution
+Make sure the following code can be executed, but throws the following error:
+> `The DELETE statement conflicted with the REFERENCE constraint "FK_OrdersDetail_Orders". The conflict occurred in database "xtreme", table "dbo.OrdersDetail", column 'OrderID'.`
+> 
+> A solution to this problem will be covered in the chapters about `Temp. Tables` and `Cursors`.
+```sql
+BEGIN TRANSACTION
+-- Arrange
+DECLARE @supplierid int,
+        @nrdeletedorders int
+SET @supplierid = 7
+-- Act
+EXECUTE DeleteOrdersFromSupplier 
+         @supplierid
+        ,@nrdeletedorders OUTPUT
+-- Print
+PRINT CONCAT(@nrdeletedorders, ' orders were deleted for supplier with id:',@supplierid);
+
+ROLLBACK
+```
+
+### Tips
+1. Ask yourself what the use case of this exercise is.
+2. Look at the data/tables which are needed for the use case
+3. Write out the code that is needed to complete the use case.
+    - You'll need a subquery to get all the `orders`.
+    - Delete the `orders` based on the results from the subquery.
+4. Wrap the use case inside a stored procedure
+
+### Deep Dive
+1. Why is your code failing? A solution will be provided in chapter about `Cursors` and `Temp. Tables`.
+
+### Solution
+A possible solution of exercise 4 can be found [here](solutions/stored-procedures-4.sql)
