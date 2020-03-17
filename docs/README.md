@@ -13,7 +13,7 @@ To start any workshop, install the required software and databases by following 
 | [01 - Basics Revisited](/workshops/basic/basic.md) | Revisit your SQL Basics. | [Notebook](/workshops/basic/notebook.ipynb)  |
 | [02 - Subqueries](/workshops/subqueries/subqueries.md) | Usage of subqueries in the main query. | [Notebook](/workshops/subqueries/notebook.ipynb) |
 | [03 - Views](/workshops/views/views.md) | Re-using a query using a view. | [Notebook](/workshops/views/notebook.ipynb) |
-| [04 - Common Table Expressions](/workshops/cte/cte.md) | Recursive querying using a CTE. | [Notebook](/workshops/cte/notebook.ipynb) |
+| [04 - CTE](/workshops/cte/cte.md) | Learn to use Common Table Expressions | [Notebook](/workshops/cte/notebook.ipynb) |
 | [05 - DDL](/workshops/ddl/ddl.md) | Define your database and tables using the Data Definition Language. |
 | [06 - Data Warehousing](/workshops/dwh/dwh.md) | Learn about ETL and data warehousing. | None |
 | [07 - Window Functions](/workshops/window-functions/window-functions.md) | Learn about partitioning data | [Notebook](/workshops/window-functions/notebook.ipynb) |
