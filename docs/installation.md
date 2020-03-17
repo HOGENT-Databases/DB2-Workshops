@@ -78,7 +78,7 @@ There are multiple databases required for the workshops. You'll be restoring the
     - [Xtreme](https://github.com/HOGENT-Databases/DB2-Workshops/raw/master/databases/xtreme.bak)
     - [Tennis](https://github.com/HOGENT-Databases/DB2-Workshops/raw/master/databases/tennis.bak)
     - [Adventure Works](https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2014.bak)
-    - [Adventure Works DW](https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorksDW2014.bak)
+    - [Corona](https://github.com/HOGENT-Databases/DB2-Workshops/raw/master/databases/corona.bak)
 2. Copy all the databases above to the `C:\Temp` folder, if the folder does not exist, create it. 
     > **Remark:** do **not** skip this step.
 2. Open SQL Server Management Studio and connect to `localhost`.
