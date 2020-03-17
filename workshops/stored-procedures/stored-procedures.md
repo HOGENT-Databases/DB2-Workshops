@@ -104,11 +104,12 @@ ROLLBACK
         IF NOT EXISTS (SELECT NULL FROM Product WHERE ProductID = @productid)
         THROW 50001, 'The product doesn''t exist',1;  
         ```
+        > Notice the semicolon at the end, it's MANDATORY.
     - What are the SELECT statements to check if :
         - There are no `purchases` for the `product`
         - There are no `orders` for the `product`
 - Version 2
-    - Wrap your `DELETE` statement is a `TRY...CATCH` block
+    - Wrap your `DELETE` statement in a `TRY...CATCH` block
     - Check how many rows were mutated by using `@@ROWCOUNT`
     - If the `@@ROWCOUNT` is `0`, something went wrong and you should `THROW` a custom error message.
     - In the `CATCH` block you can check the `ERROR_NUMBER()` for custom error messages or database generated errors for example Foreign Key Constraints.
