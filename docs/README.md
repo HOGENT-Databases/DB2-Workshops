@@ -19,7 +19,7 @@ To start any workshop, install the required software and databases by following 
 | [07 - Window Functions](/workshops/window-functions/window-functions.md) | Learn about partitioning data | [Notebook](/workshops/window-functions/notebook.ipynb) |
 | [08 - Stored Procedures](/workshops/stored-procedures/stored-procedures.md) | Learn about re-using code with Stored Procedures. | [Notebook](/workshops/stored-procedures/notebook.ipynb) |
 | [09 - Triggers](/workshops/triggers/triggers.md) | Learn about cascading actions with triggers. | Not yet available |
-| [10 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. | Not yet available |
+| [10 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. | [Notebook](/workshops/cursors/notebook.ipynb) |
 | [11 - Temporary Tables](/workshops/temp-tables/temp-tables.md) | Learn about storing temp. data. | Not yet available |
 | [12 - Dynamic SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing flexible SQL statements. | Not yet available |
 | [13 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices.| Not yet available |
