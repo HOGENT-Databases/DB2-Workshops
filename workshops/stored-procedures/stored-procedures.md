@@ -223,4 +223,4 @@ ROLLBACK
 1. Why is your code failing? A solution will be provided in chapter about `Cursors` and `Temp. Tables`.
 
 ### Solution
-A possible solution of exercise 4 can be found [here](solutions/stored-procedures-4.sql)
+A possible solution of exercise 4 can be found [here](solutions/stored-procedures.md/#exercise-4)
