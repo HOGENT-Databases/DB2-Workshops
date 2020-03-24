@@ -103,12 +103,77 @@ Recreate the following database called `Game_db` based on the following schema:
     DROP COLUMN Phonenumber;
     ```
 
+## Exercise 2
+Given the following Relational Model:
+- Employee(<ins>Id</ins>, Name, Email)
+- Project(<ins>Name</ins>, Description, StartDate, EndDate)
+- Allocation(<ins>EmployeeId, ProjectName</ins>, HoursWorked) 
+    - IR: EmployeeId References Employee(Id), mandatory
+    - IR: ProjectName References Project(Name), mandatory
+
+Complete the following tasks:
+Before we start, we are dropping the tables if they exist.
+> Remark: The order of the deletion is important due to `constraints`.
+```sql
+DROP TABLE IF EXISTS Allocation;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Project;
+```
+
+1. Create the table `Employee`
+    - IR: `Id` is created by the database engine.
+    - IR: `Name` is required.
+    - IR: `Email` is unique and required.
+    ```sql
+    CREATE TABLE Employee 
+    (
+        Id INT IDENTITY, 
+        [Name] VARCHAR(30) NOT NULL, 
+        Email  VARCHAR(30) NOT NULL,
+        CONSTRAINT PK_Employee PRIMARY KEY(Id),
+        CONSTRAINT UX_Employee_Name UNIQUE([Name])
+    ) 
+    ```
+2. Create the table `Project`
+    - IR: `BeginDate` should always we smaller or equal to the `EndDate`.
+    - IR: `Name` should only contain [alphanumeric characters](https://whatis.techtarget.com/definition/alphanumeric-alphameric).
+    ```sql
+    CREATE TABLE Project 
+    (
+        [Name] VARCHAR(50), 
+        [Description] VARCHAR(30), 
+        StartDate DATE, 
+        EndDate DATE,
+        CONSTRAINT PK_Project PRIMARY KEY([Name]),
+        CONSTRAINT CH_Project_Begin_LessThan_End CHECK (StartDate <= EndDate),
+        CONSTRAINT CH_Project_Name_Alphanumeric  CHECK ([Name] LIKE '[0-9a-zA-Z]{1,50}')
+    ) 
+    ```
+3. Create the table `Allocation`
+    - The default for `HoursWorked` is 3.
+    - If a `Project` is deleted, so should the `allocation(s)`.
+    - If an `Employee` is deleted, so should the `allocation(s)`.
+    ```sql
+    CREATE TABLE Allocation
+    (
+    EmployeeId INT, 
+    ProjectName VARCHAR(50), 
+    HoursWorked INT CONSTRAINT DF_HoursWorked DEFAULT 3,
+    CONSTRAINT PK_Allocation PRIMARY KEY(EmployeeId, ProjectName),
+    CONSTRAINT FK_Allocation_Employee FOREIGN KEY(EmployeeId) REFERENCES Employee(Id) ON UPDATE CASCADE,
+    CONSTRAINT FK_Allocation_Project FOREIGN KEY(ProjectName) REFERENCES Project([Name]) 
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    ) 
+    ```
+4. Write an ALTER statement removing the constraint which ensures that `Email`s must be unique in the `Employee` table.
+    ```sql
+    ALTER TABLE Employee DROP CONSTRAINT UX_Employee_Name;
+    ```
+
 ## Deep Dive:
 1. Why is it sometimes better/mandatory to embrace certain table/column/... names like `Name`, `Type`, `Order`, etc. with square brackets like the following `[Name], [Type], [Order]` ?
     - [This StackOverflow post](https://stackoverflow.com/questions/3551284/sql-serverwhat-do-brackets-mean-around-column-name) can give some clarification.
-
-## Exercise 2
-> Solution will be posted before 6/03/2020.
 
 ## Exercises
 Click [here](../ddl.md) to go back to the exercises.

@@ -38,26 +38,25 @@ Given the following Relational Model:
     - IR: EmployeeId References Employee(Id), mandatory
     - IR: ProjectName References Project(Name), mandatory
 
-Complete the following tasks:
+Complete the following tasks, you have to decide on the datatypes if they're not given.
+Create a new database to start creating some tables.
 
 1. Create the table `Employee`
     - IR: `Id` is created by the database engine.
-    - IR: `Name` is required,
-    - IR: `Email` is unique and required,
+    - IR: `Name` is required.
+    - IR: `Email` is unique and required.
 2. Create the table `Project`
+    - IR: `BeginDate` should always we smaller or equal to the `EndDate`.
+    - IR: `Name` should only contain [alphanumeric characters](https://whatis.techtarget.com/definition/alphanumeric-alphameric).
 3. Create the table `Allocation`
     - The default for `HoursWorked` is 3.
     - If a `Project` is deleted, so should the `allocation(s)`.
     - If an `Employee` is deleted, so should the `allocation(s)`.
-4. In the `Project` table, add a constraint so that each `BeginDate` must be before the `EndDate`, name the contraint `CH_Project_Begin_Before_End`
-5. Adjust the `Project` table, so that the `Name` cannot be longer than 50 characters long.
-6. Write an ALTER statement removing the constraint which ensures that `Email`s must be unique in the `Employee` table.
+4. Write an `ALTER` statement removing the `constraint` which ensures that `Email`s must be unique in the `Employee` table.
 
 
 ## Deep Dive:
 1. Why is it sometimes better to embrace certain table/column/... names like `Name`, `Type`, `Order`, etc. with square brackets like the following `[Name], [Type], [Order]` ?
-
-
 
 ### Solution
 A possible solution for these exercises can be found [here](solutions/ddl.md).
