@@ -14,7 +14,7 @@ In this workshop you'll learn how to write flexible SQL statements.
 - Due to recompilation and late binding the performance of Dynamically constructed queries *can* be rather poor.
 
 ## Exerise 1
-In a lot of business applications a user is shown a table of data. Which in most cases is a selected list of columns from a table in the SQL database. However sometimes a uses wants to `sort` the data as he wishes. To solve this problem and give the user more flexibility we can create a dynamic SQL statement. The end goal is that a user can choose how many rows he wants to see, on which column the data has to be sorted and in which direction (`ascending or descending`). An example can be seen in the screenshot below.
+In a lot of business applications a user is shown a table of data. Which in most cases is a selected list of columns from a table in the SQL database. However sometimes a user wants to `sort` the data as he wishes. To solve this problem and give the user more flexibility we can create a dynamic SQL statement. The end goal is that a user can choose how many rows he wants to see, on which column the data has to be sorted and in which direction (`ascending or descending`). An example can be seen in the screenshot below.
 
 ![Table Sorting](images/table-sort.gif)
 > Note that the screenshot is not using the data of the database `xtreme`.
