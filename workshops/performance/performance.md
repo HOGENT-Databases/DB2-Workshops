@@ -6,7 +6,7 @@ In this workshop we'll use the a fragment of the famous Stack Overflow database 
 
 1. Download `.mdf` file from [here](http://downloads.brentozar.com.s3.amazonaws.com/StackOverflow2010.7z)
     - Caution the zipped size is about 1 Gigabyte, unzipped the Database is about 10 Gigabyte.
-2. Copy the file in  your  SQL  Server  data  directory (e.g. `C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA)`. 
+2. Copy the file in  your  SQL  Server  data  directory `C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA` 
 3. In  SQL Server Management Studio (SSMS), right  click  on  Databases,  Attach, Add and browse to the `.mdf` file.
 
 ## Exercise 1 - Exploration
