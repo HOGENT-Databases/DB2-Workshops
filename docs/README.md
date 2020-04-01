@@ -21,8 +21,8 @@ To start any workshop, install the required software and databases by following 
 | [09 - Triggers](/workshops/triggers/triggers.md) | Learn about cascading actions with triggers. | [Notebook](/workshops/triggers/notebook.ipynb) |
 | [10 - Cursors](/workshops/cursors/cursors.md) | Learn about navigating through data with cursors. | [Notebook](/workshops/cursors/notebook.ipynb) |
 | [11 - Temporary Tables](/workshops/temp-tables/temp-tables.md) | Learn about storing temp. data. | [Notebook](/workshops/temp-tables/notebook.ipynb) |
-| [12 - Dynamic SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing flexible SQL statements. | Not yet available |
-| [13 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices.| Not yet available |
+| [12 - Dynamic SQL](/workshops/dynamic-sql/dynamic-sql.md) | Learn about writing flexible SQL statements. | None |
+| [13 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices.| None |
 | [14 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML| [Notebook](/workshops/xml/notebook.ipynb) |
 | [15 - Transactions](/workshops/transactions/transactions.md) | Learn about isolation levels and transactions. | None |
 
