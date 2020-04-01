@@ -4,7 +4,7 @@ In this workshop you'll learn how to optimize the performance of SQL queries by 
 ## Prerequisites
 In this workshop we'll use the a fragment of the famous Stack Overflow database (years 2008-2010). Because of the size we don’t deliver a backup file but we restore the database directly from the datafile `StackOverflow2010.mdf`. 
 
-1. Download `.mdf` file from [here](http://downloads.brentozar.com.s3.amazonaws.com/StackOverflow2010.7z)
+1. Download the `.mdf` file from [here](http://downloads.brentozar.com.s3.amazonaws.com/StackOverflow2010.7z)
     > Caution the zipped size is about 1 Gigabyte, unzipped the Database is about 10 Gigabyte. You can unzip the `.7z` file using [7 zip](https://www.7-zip.org/download.html) 
 2. Copy the file in  your  SQL  Server  data  directory `C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA` 
 3. In  SQL Server Management Studio (SSMS), right  click  on  Databases,  Attach, Add and browse to the `.mdf` file.
