@@ -35,10 +35,10 @@ GO
 
 ## Levels
 SQL Server supports four traditional isolation levels that are based on pessimistic concurrency control (locking): 
-1. Read Uncommitted
-2. Read Committed (the default in on-premises SQL Server instances)
-3. Repeatable Read
-4. Serializable
+1. [Read Uncommitted](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#read-uncommitted)
+2. [Read Committed](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#read-committed) (the default in on-premises SQL Server instances)
+3. [Repeatable Read](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#repeatable-read)
+4. [Serializable](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#serializable)
 
 ### READ UNCOMMITTED
 Is the **least** restrictive isolation level because it **ignores locks placed by other transactions**. Transactions executing under `READ UNCOMMITTED` can read modified data values that have not yet been committed by other transactions; these are called "dirty" reads.
