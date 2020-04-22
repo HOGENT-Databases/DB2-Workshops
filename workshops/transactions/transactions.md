@@ -34,6 +34,9 @@ Denotes a situation where a transaction reads **partial** results of another tra
 ### Phantom reads
 `Phantom reads` can occur when a transaction T<sub>2</sub> is executing `insert` or `delete` operations on a set of rows that are being read by another transaction T<sub>1</sub>.
 
+### Deadlock
+
+
 #### Matrix
 The following matrix shows the issues that can occur when using different isolation levels.
 <table>
@@ -327,6 +330,64 @@ COMMIT
 BEGIN TRANSACTION
 INSERT INTO dbo.TestIsolationLevels VALUES (3427, 'Phantom Employee 1', 30000)
 COMMIT
+```
+
+
+## Deadlocks
+
+### Session 1
+```sql
+use xtreme;
+-- 1
+begin transaction
+-- 3
+select salary from employee where employeeid=1
+-- S-lock on record for employeeid=1 is taken and released 
+-- after the select statement (default isolation level = read committed)
+-- 5
+update employee set salary = salary * 1.1 where employeeid=1
+-- X-lock on record for employeeid=1 is taken and held until end of transaction 
+-- (write statements are not effected by isolation level)
+-- 6
+select salary from employee where employeeid=1
+-- shows 44.000
+RAISERROR('Session 1 - waiting for 5 so Session 2 can start.',0,0) WITH NOWAIT
+WAITFOR DELAY '00:00:05'
+-- 9
+select salary from employee where employeeid=2
+-- sessions "hangs", in fact it waits for the X-lock from session 2 on employeeid = 2 to be released
+-- after session 2 queries the record from employee 1 a deadlock occurs and this session is chosen as the deadlock victim
+-- a rollback is executed automatically and X-lock is released
+-- 11
+select salary from employee where employeeid=2
+-- the session hangs again because session 2 still hasn't committed nor aborted
+-- after session 2 commits the new salary for employee 2 is shown
+
+```
+
+### Session 2
+```sql
+use xtreme;
+-- 2
+begin transaction
+-- 4
+select salary from employee where employeeid=2
+-- S-lock on record for employeeid=1 is taken and released 
+-- after the select statement (default isolation level = read committed)
+-- 7
+update employee set salary = salary * 1.1 where employeeid=2
+-- X-lock on record for employeeid=1 is taken and held until end of transaction 
+-- (write statements are not effected by isolation level)
+-- 8
+select salary from employee where employeeid=2
+-- 10
+select salary from employee where employeeid=1
+-- session "hangs" for a few seconds continues after session 1 has been killed (or vice versa)
+-- due to deadlock detection
+-- it shows the "old" value of the salary because session 1 has never committed its update
+-- 12
+commit
+-- the X-lock is released
 ```
 
 ## Further Reading
