@@ -5,10 +5,11 @@ Isolation levels determine the behavior of concurrent transactions that read or 
 
 ## Levels
 SQL Server supports four traditional isolation levels that are based on pessimistic concurrency control (locking): 
-1. Read Uncommitted
-2. Read Committed (the default in on-premises SQL Server instances)
-3. Repeatable Read
-4. Serializable
+1. [Read Uncommitted](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#read-uncommitted)
+2. [Read Committed](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#read-committed) (the default in on-premises SQL Server instances)
+3. [Repeatable Read](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#repeatable-read)
+4. [Serializable](https://github.com/HOGENT-Databases/DB2-Workshops/blob/master/workshops/transactions/transactions.md#serializable)
+
 
 ## Issues
 In situations where different `concurrent transactions` attempt to access the **same** `database object`, some issues can occur. However, we can use different `isolations levels` which control the `locking behavior` to grant or deny access to the `database object`. The following issues can occur:
