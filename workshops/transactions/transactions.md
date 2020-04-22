@@ -1,5 +1,86 @@
 # Transactions - Isolation Levels
-Isolation levels determine the behavior of concurrent users who read or write data. A reader is any statement that selects data, using a shared lock by default. A writer is any statement that makes a modification to a table and requires an exclusive lock. **You cannot control the way writers behave in terms of the locks that they acquire and the duration of the locks, but you can control the way readers behave.** Also, as a result of controlling the behavior of readers, you can have an **implicit influence on the behavior of writers.** You do so by setting the isolation level, either at the session level with a session option or at the query level with a table hint. 
+
+## Introduction
+Isolation levels determine the behavior of concurrent transactions that read or write data. A reader is any statement that selects data, using a `shared lock` by default. A writer is any statement that makes a modification to a table and requires an `exclusive lock`. **You cannot control the way writers behave in terms of the locks that they acquire and the duration of the locks, but you can control the way readers behave.** As a result of controlling the behavior of readers, you can have an **implicit influence on the behavior of writers.** You do so by setting the `isolation level`, either at the session level with a session option or at the query level with a table hint. 
+
+## Levels
+SQL Server supports four traditional isolation levels that are based on pessimistic concurrency control (locking): 
+1. Read Uncommitted
+2. Read Committed (the default in on-premises SQL Server instances)
+3. Repeatable Read
+4. Serializable
+
+## Issues
+In situations where different `concurrent transactions` attempt to access the **same** `database object`, some issues can occur. However, we can use different `isolations levels` which control the `locking behavior` to grant or deny access to the `database object`. The following issues can occur:
+- Lost update
+- Uncommitted dependency (dirty read)
+- Inconsistent analysis
+- Nonrepeatable read
+- Phantom reads
+
+### Lost update
+`Lost update` problem occurs if an otherwise successful update of a data item by a transaction is overwritten by another transaction that wasn’t "aware' of the first update.
+
+### Uncommitted dependency (dirty read)
+If a transaction reads one or more data items that are being updated by another, as yet uncommitted, transaction, we may run into the `uncommitted dependency` (a.k.a. `dirty read`) problem.
+
+### Inconsistent analysis
+Denotes a situation where a transaction reads **partial** results of another transaction that simultaneously interacts with (and possibly updates) the same data items.
+
+### Nonrepeatable read
+`Nonrepeatable read` can occur when a transaction T<sub>1</sub> reads the **same row multiple times**, but obtains **different subsequent values**, because **another transaction T<sub>2</sub> updated** this row in the meantime.
+
+### Phantom reads
+`Phantom reads` can occur when a transaction T<sub>2</sub> is executing `insert` or `delete` operations on a set of rows that are being read by another transaction T<sub>1</sub>.
+
+#### Matrix
+The following matrix shows the issues that can occur when using different isolation levels.
+<table>
+    <thead>
+        <tr align="center">
+            <th align="left">Isolation level</th>
+            <th>Lost update</th>
+            <th>Uncommitted dependency</th>
+            <th>Inconsistent analysis</th>
+            <th>Nonrepeatable read</th>
+            <th>Phantom read</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr align="center">
+            <th align="left">Read uncommitted</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+        <tr align="center">
+            <th align="left">Read committed</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+        <tr align="center">
+            <th align="left">Repeatable read</th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
+        <tr align="center">
+            <th align="left">Serializable</th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+        </tr>
+    </tbody>
+</table>
 
 
 ## Prerequisites
@@ -33,13 +114,6 @@ VALUES
 GO
 ```
 
-## Levels
-SQL Server supports four traditional isolation levels that are based on pessimistic concurrency control (locking): 
-1. Read Uncommitted
-2. Read Committed (the default in on-premises SQL Server instances)
-3. Repeatable Read
-4. Serializable
-
 ### READ UNCOMMITTED
 Is the **least** restrictive isolation level because it **ignores locks placed by other transactions**. Transactions executing under `READ UNCOMMITTED` can read modified data values that have not yet been committed by other transactions; these are called "dirty" reads.
 
@@ -49,6 +123,12 @@ Create a new Query Window in SSMS **(CTRL+N)**, afterwards execute the following
 BEGIN TRANSACTION
 DECLARE @startMessage varchar(200) = 'Transaction started at ' + CONVERT(varchar, SYSDATETIME(), 121)
 RAISERROR(@startMessage,0,0) WITH NOWAIT
+
+SELECT 
+ EmpName
+,EmpSalary
+FROM dbo.TestIsolationLevels
+WHERE EmpID = 2900;
 
 UPDATE  dbo.TestIsolationLevels 
 SET     EmpSalary = 25000
@@ -60,7 +140,7 @@ ROLLBACK;
 DECLARE @endMessage varchar(200) = 'Rollback happened at ' + CONVERT(varchar, SYSDATETIME(), 121)
 RAISERROR(@endMessage,0,0) WITH NOWAIT
 ```
-> The previous code starts a transaction, updates the `EmpSalary` to `25.000`, waits for 20 seconds to simulate a long statement and after 20 seconds, the transaction is `rolledback`. Within those 20 seconds of waiting make sure to trigger the following piece of code for **Session 2**. If you waited too long you can execute **Session 1** again.
+> The previous code starts a transaction, updates the `EmpSalary` to `25.000`, waits for 20 seconds to simulate a long statement and after 20 seconds, the transaction is `rolledback`. Within those 20 seconds of waiting, make sure to trigger the following piece of code for **Session 2**. If you waited too long you can execute **Session 1** again.
 
 #### Session 2
 Execute the following code in another query window, let's call it **Session 2**.
@@ -80,10 +160,10 @@ RAISERROR(@endMessage,0,0) WITH NOWAIT
 > **Result**
 > 1. **Session 1** tried to update the salary;
 > 2. During the update of **Session 1**, **Session 2** read the data after it was updated by **Session 1**, however the transaction of **Session 2** was not committed yet.
-> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen but **Session 1** is already using the updated values, also known as a `dirty read`.
+> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen but **Session 1** is already using the updated values, this is also known as a `dirty read`.
 
 ### READ COMMITTED
-Is the default isolation level for SQL Server. It **prevents dirty reads** by specifying that statements **cannot** read data values that **have been modified but not yet committed by other transactions**. Other transactions can still modify, insert, or delete data between executions of individual statements within the current transaction, resulting in non-repeatable reads, or "phantom" data.
+Is the default isolation level for SQL Server. It **prevents dirty reads and lost updates** by specifying that statements **cannot** read data values that **have been modified but not yet committed by other transactions**. However, the `inconsistent analysis` problem may still occur with this isolation level, as well as `nonrepeatable read`s and `phantom reads`.
 
 #### Session 1
 ```sql
@@ -104,10 +184,10 @@ RAISERROR(@endMessage,0,0) WITH NOWAIT
 > The previous code starts a transaction, updates the `EmpSalary` to `25.000`, waits for 20 seconds to simulate a long statement and after 20 seconds, the transaction is `rolledback`. Within those 20 seconds of waiting make sure to trigger the following piece of code for **Session 2**. If you waited too long you can execute **Session 1** again.
 
 #### Session 2
-You'll notice that the query does not complete since it's waiting on an action(`COMMIT` or `ROLLBACK`) from **Session 1**, after 20 seconds the query is completed since **Session 1** did a `ROLLBACK` of the transaction.
+You'll notice that the query does not complete directly since it's waiting on an action(`COMMIT` or `ROLLBACK`) from **Session 1**, after 20 seconds the query is completed since **Session 1** did a `ROLLBACK` of the transaction.
 ```sql
-SET NOCOUNT ON;
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+BEGIN TRANSACTION
 DECLARE @startMessage varchar(200) = 'Select requested at ' + CONVERT(varchar, SYSDATETIME(), 121)
 RAISERROR(@startMessage,0,0) WITH NOWAIT
 
@@ -119,18 +199,17 @@ DECLARE @endMessage varchar(200) = 'Select completed at ' + CONVERT(varchar, SYS
 RAISERROR(@endMessage,0,0) WITH NOWAIT
 ```
 
-
 > **Result** 
 > 1. **Session 1** tried to update the salary;
-> 2. During the update of **Session 1**, **Session 2** tried reading the data after it was updated by **Session 1**, however the transaction of **Session 2** was not committed yet. Therefore **Session 2** is waiting on an action(`ROLLBACK` or `COMMIT`) from **Session 1**.
-> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen. Suddenly **Session 1** can read the values. 
+> 2. During the update of **Session 1**, **Session 2** tried reading the data after it was updated by **Session 1**, notice that the transaction of **Session 1** was not committed yet. Therefore **Session 2** is waiting on an action(`ROLLBACK` or `COMMIT`) from **Session 1**.
+> 3. **Session 1** did a rollback of it's changes, so basically the update did not happen. Only after **Session 1** completes, **Session 2** can read the values. 
 
 #### Issues
 The issue with a `COMMITED READ` is that other transactions can still mutate the data outside of the first transaction. For example:
-1. Session 1 reads data;
-2. Session 1 does some other actions on other data (in the example below simulated with the `WAITFOR` 10 seconds statement);
-3. Session 2 updates the same data as Session 1 just read and commits;
-4. Session 1 reads the same data again after 10 seconds.
+1. **Session 1** reads data;
+2. **Session 1** does some other actions on other data (in the example below simulated with the `WAITFOR` 20 seconds statement);
+3. **Session 2** updates the same data as **Session 1** which just reads and commits, there is no mutation going on;
+4. **Session 1** reads the same data again after 20 seconds.
 5. The data will no longer be the same.
 
 The code that visualizes this behavior is the following:
@@ -138,16 +217,24 @@ The code that visualizes this behavior is the following:
 ##### Session 1
 ```sql
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED 
-SET NOCOUNT ON
-GO
-BEGIN TRAN
+BEGIN TRANSACTION
+
+RAISERROR('1. Going to select the data.',0,0) WITH NOWAIT
 SELECT  EmpID, EmpName, EmpSalary
 FROM    dbo.TestIsolationLevels 
 WHERE   EmpID = 2900
-WAITFOR DELAY '00:00:10' -- Do some other actions.
+
+RAISERROR('2. Selected all my data.',0,0) WITH NOWAIT
+RAISERROR('Doing some other stuff for 20 seconds.',0,0) WITH NOWAIT
+
+WAITFOR DELAY '00:00:20' -- Do some other actions.
+
+RAISERROR('3. Going to select the data.',0,0) WITH NOWAIT
 SELECT  EmpID, EmpName, EmpSalary
 FROM    dbo.TestIsolationLevels 
 WHERE   EmpID = 2900
+RAISERROR('4. Selected all my data.',0,0) WITH NOWAIT
+
 COMMIT
 ```
 
@@ -172,7 +259,9 @@ BEGIN TRANSACTION
 SELECT  EmpID, EmpName, EmpSalary
 FROM    dbo.TestIsolationLevels 
 WHERE   EmpID = 2900
+
 WAITFOR DELAY '00:00:10' -- Do some other actions.
+
 SELECT  EmpID, EmpName, EmpSalary
 FROM    dbo.TestIsolationLevels 
 WHERE   EmpID = 2900
@@ -184,13 +273,13 @@ You'll notice that **Session 2** (Update) is waiting on the **Session 1**(SELECT
 ```sql
 BEGIN TRANSACTION
 UPDATE  dbo.TestIsolationLevels
-SET     EmpSalary = 25000
+SET     EmpSalary = 26000
 WHERE   EmpID = 2900
 COMMIT
 ```
 
 #### Issues
-Interestingly though, this still doesn't hold true for phantom rows - it's possible to insert rows into a table and have the rows returned by a calling SELECT transaction even under the REPEATABLE READ isolation level. The code that visualizes this behavior is the following:
+Interestingly though, this still doesn't hold true for `phantom rows` - it's possible to `insert` rows into a table and have the rows returned by a calling SELECT transaction even under the REPEATABLE READ isolation level. The code that visualizes this behavior is the following:
 
 ##### Session 1
 ```sql
@@ -216,7 +305,7 @@ COMMIT
 ### SERIALIZABLE
 Is the **most restrictive** isolation level, because it locks entire ranges of keys and holds the locks until the transaction is complete. Basically it's the same as `REPEATABLE READ` but adds the restriction that **other transactions cannot insert new rows into ranges that have been read by the transaction until the transaction is complete**.
 
-SERIALIZABLE has all the features of `READ COMMITTED`, `REPEATABLE READ` but also ensures concurrent transactions are treated as if they had been run in **serial**. This means **guaranteed repeatable reads, and no phantom rows**. Be warned, however, that this (and to some extent, the previous two isolation levels) **can cause large performance losses** as concurrent transactions are effectively queued. Here's the phantom rows example used in the previous section again but this time using the SERIALIZABLE isolation level:
+SERIALIZABLE has all the features of `READ COMMITTED`, `REPEATABLE READ` but also ensures concurrent transactions are treated as if they had been run in **serial**. This means **guaranteed repeatable reads, and no phantom rows**. Be warned, however, that this (and to some extent, the previous two isolation levels) **can cause large performance losses** as concurrent transactions are effectively queued. Here the phantom rows example used in the previous section again but this time using the SERIALIZABLE isolation level:
 
 #### Session 1
 ```sql
