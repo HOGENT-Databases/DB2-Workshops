@@ -15,8 +15,8 @@ In this workshop you'll learn the use of `window functions` and partitioning dat
 - Achieve the resultsets per exercise using window functions.
 
 ## Exercises
-1. `The total_cases` column is a calculated column. Recalculate this column and calculate for each line the difference between this column and your calculation. 
-    |date      |location                        |new_cases|total_cases|error (>0 means overestimatioin)|
+1. `The total_cases` column is a pre-calculated column (see schema). Recalculate this column and calculate for each line the difference between this column and your calculation. 
+    |date      |location                        |new_cases|total_cases|error (>0 means overestimation)|
     |----------|--------------------------------|---------|-----------|--------------------------------|
     |2020-02-25|Afghanistan                     |0        |1          |1                               |
     |2020-02-26|Afghanistan                     |0        |1          |1                               |
