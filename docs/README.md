@@ -25,6 +25,7 @@ To start any workshop, install the required software and databases by following 
 | [13 - Performance](/workshops/performance/performance.md) | Learn about writing performant queries using Indices.| None |
 | [14 - Data Formatting](/workshops/xml/xml.md) | Learn about formatting and transforming your data structure using XML| [Notebook](/workshops/xml/notebook.ipynb) |
 | [15 - Transactions](/workshops/transactions/transactions.md) | Learn about isolation levels and transactions. | None |
+| [16 - PowerBI](https://docs.microsoft.com/en-us/learn/modules/get-data-power-bi/) | Find and collect data from different sources and create visual reports. | None |
 
 ## Notebooks
 In certain workshops a `.IPYNB` file is provided, this file can be opened with `Azure Data Studio` and can give you some more insight. Basically it combines SQL statements which can be executed and some additional information how the statement works. 
