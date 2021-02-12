@@ -1,5 +1,7 @@
 # Databases II - Workshops
 
+VERSION 2020-2021
+
 ## Introduction
 
 In this repository all the workshops of Databases II are provided, simply follow the links below to start a workshop.
