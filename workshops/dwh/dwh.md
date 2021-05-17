@@ -301,6 +301,10 @@ As a final test we can add a sales line for an updated product in the operationa
 11.	Now, add an OLE DB destination and connect to the Flat File Source. Configure the Destination for the country table from the AventureWorksDW database. Check the Columns tab to verify all corresponding fields are linked.
 12.	Run the package and check the table country.
 
+## Solutions to DWH exercises on EntertainmentAgency
+You find ![here](dwh_solutions.sql) the solutions to the DWH EntertainmentAgency Exercises on both OLTP & DWH, including the statement
+to fill the fact table. 
+
 ## Further Reading
 You can get more information about SSIS by reading the [official documentation](https://docs.microsoft.com/en-us/sql/integration-services/sql-server-integration-services?view=sql-server-ver15) provided by Microsoft.
 
