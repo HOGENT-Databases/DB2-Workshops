@@ -302,7 +302,7 @@ As a final test we can add a sales line for an updated product in the operationa
 12.	Run the package and check the table country.
 
 ## Solutions to DWH exercises on EntertainmentAgency
-You find ![here](dwh_solutions.sql) the solutions to the DWH EntertainmentAgency Exercises on both OLTP & DWH, including the statement
+You find [here](dwh_solutions.sql) the solutions to the DWH EntertainmentAgency Exercises on both OLTP & DWH, including the statement
 to fill the fact table. 
 
 ## Further Reading
