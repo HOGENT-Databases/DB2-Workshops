@@ -304,6 +304,9 @@ As a final test we can add a sales line for an updated product in the operationa
 ## Solutions to DWH exercises on EntertainmentAgency
 You find [here](dwh_solutions.sql) the solutions to the DWH EntertainmentAgency Exercises on both OLTP & DWH, including the statement
 to fill the fact table. 
+You find [here](dwh_creates.sql) the create statements for the fact and dimension tables of the DWH EntertainmentAgency Exercise. 
+
+
 
 ## Further Reading
 You can get more information about SSIS by reading the [official documentation](https://docs.microsoft.com/en-us/sql/integration-services/sql-server-integration-services?view=sql-server-ver15) provided by Microsoft.
